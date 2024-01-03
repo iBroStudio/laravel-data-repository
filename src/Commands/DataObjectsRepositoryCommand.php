@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace IBroStudio\DataObjectsRepository\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class DataObjectsRepositoryCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-data-objects-repository';
 
     public $description = 'My command';
 

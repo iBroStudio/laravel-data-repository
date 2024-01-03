@@ -1,0 +1,24 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        Schema::create('data_objects', function (Blueprint $table) {
+                    $table->id();
+                    $table->morphs('referable');
+                    $table->string('class');
+                    $table->json('values');
+                    $table->timestamps();
+                });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('data_objects');
+    }
+};

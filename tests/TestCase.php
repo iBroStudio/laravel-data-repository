@@ -1,10 +1,13 @@
 <?php
 
-namespace VendorName\Skeleton\Tests;
+namespace IBroStudio\DataObjectsRepository\Tests;
 
+use IBroStudio\DataObjectsRepository\DataObjectsRepositoryServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use MichaelRubel\EnhancedContainer\LecServiceProvider;
+use MichaelRubel\ValueObjects\ValueObjectServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
-use VendorName\Skeleton\SkeletonServiceProvider;
+use Spatie\LaravelData\LaravelDataServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -13,14 +16,17 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'VendorName\\Skeleton\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'IBroStudio\\DataObjectsRepository\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            SkeletonServiceProvider::class,
+            DataObjectsRepositoryServiceProvider::class,
+            LaravelDataServiceProvider::class,
+            //LecServiceProvider::class,
+            //ValueObjectServiceProvider::class,
         ];
     }
 
@@ -28,9 +34,10 @@ class TestCase extends Orchestra
     {
         config()->set('database.default', 'testing');
 
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_skeleton_table.php.stub';
+        $migration = include __DIR__.'/Support/Database/Migrations/create_referables_table.php.stub';
         $migration->up();
-        */
+
+        $migration = include __DIR__.'/../database/migrations/create_data_objects_repository_table.php.stub';
+        $migration->up();
     }
 }
