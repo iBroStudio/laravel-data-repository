@@ -3,7 +3,6 @@
 namespace IBroStudio\DataObjectsRepository\ValueObjects;
 
 use Illuminate\Support\Str;
-use Illuminate\Support\Stringable;
 use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 use MichaelRubel\ValueObjects\ValueObject;
@@ -20,7 +19,7 @@ class Timecode extends ValueObject
     {
         if (isset($this->hours)
             || isset($this->minutes)
-            ||isset($this->seconds)
+            || isset($this->seconds)
         ) {
             throw new InvalidArgumentException(static::IMMUTABLE_MESSAGE);
         }
@@ -46,7 +45,7 @@ class Timecode extends ValueObject
 
     private function fromString(string $value): void
     {
-        list($this->hours, $this->minutes, $this->seconds) = explode(':', $value);
+        [$this->hours, $this->minutes, $this->seconds] = explode(':', $value);
     }
 
     protected function validate(): void
@@ -55,9 +54,9 @@ class Timecode extends ValueObject
             throw ValidationException::withMessages(['Time position cannot be empty.']);
         }
 
-         if (! is_float($this->seconds)) {
-             throw ValidationException::withMessages(['Seconds must be float']);
-         }
+        if (! is_float($this->seconds)) {
+            throw ValidationException::withMessages(['Seconds must be float']);
+        }
 
         if ($this->seconds > 59) {
             throw ValidationException::withMessages(['Seconds can not be greater than 59']);
