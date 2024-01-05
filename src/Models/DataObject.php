@@ -1,9 +1,9 @@
 <?php
 
-namespace IBroStudio\DataObjectsRepository\Models;
+namespace IBroStudio\DataRepository\Models;
 
-use IBroStudio\DataObjectsRepository\Casts\DataObjectAttribute;
-use IBroStudio\DataObjectsRepository\Database\Factories\DataObjectFactory;
+use IBroStudio\DataRepository\Casts\DataObjectAttribute;
+use IBroStudio\DataRepository\Database\Factories\DataObjectFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;

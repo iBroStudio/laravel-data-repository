@@ -1,9 +1,9 @@
 <?php
 
-namespace IBroStudio\DataObjectsRepository\Tests\Support\Models;
+namespace IBroStudio\DataRepository\Tests\Support\Models;
 
-use IBroStudio\DataObjectsRepository\Concerns\HasDataRepository;
-use IBroStudio\DataObjectsRepository\Tests\Support\Database\Factories\ReferableFactory;
+use IBroStudio\DataRepository\Concerns\HasDataRepository;
+use IBroStudio\DataRepository\Tests\Support\Database\Factories\ReferableFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

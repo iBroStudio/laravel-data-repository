@@ -1,7 +1,7 @@
 <?php
 
-use IBroStudio\DataObjectsRepository\Models\DataObject;
-use IBroStudio\DataObjectsRepository\Tests\Support\Models\Referable;
+use IBroStudio\DataRepository\Models\DataObject;
+use IBroStudio\DataRepository\Tests\Support\Models\Referable;
 
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\assertModelExists;

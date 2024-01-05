@@ -1,6 +1,6 @@
 <?php
 
-use IBroStudio\DataObjectsRepository\ValueObjects\EncryptableText;
+use IBroStudio\DataRepository\ValueObjects\EncryptableText;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
 

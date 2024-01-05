@@ -1,8 +1,9 @@
 <?php
 
-namespace IBroStudio\DataObjectsRepository\Casts;
+namespace IBroStudio\DataRepository\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use MichaelRubel\ValueObjects\ValueObject;
 
 class DataObjectAttribute implements CastsAttributes
 {
@@ -11,7 +12,9 @@ class DataObjectAttribute implements CastsAttributes
         if (isset($attributes[$key])) {
 
             return $attributes['class']::from(
-                json_decode($value, true)
+                is_subclass_of($attributes['class'], ValueObject::class)
+                    ? current(json_decode($value))
+                    : json_decode($value, true)
             );
         }
 

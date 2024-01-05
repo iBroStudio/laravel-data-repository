@@ -1,8 +1,8 @@
 <?php
 
-namespace IBroStudio\DataObjectsRepository\Tests;
+namespace IBroStudio\DataRepository\Tests;
 
-use IBroStudio\DataObjectsRepository\DataObjectsRepositoryServiceProvider;
+use IBroStudio\DataRepository\DataRepositoryServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use MichaelRubel\EnhancedContainer\LecServiceProvider;
 use MichaelRubel\ValueObjects\ValueObjectServiceProvider;
@@ -16,14 +16,14 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'IBroStudio\\DataObjectsRepository\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'IBroStudio\\DataRepository\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            DataObjectsRepositoryServiceProvider::class,
+            DataRepositoryServiceProvider::class,
             LaravelDataServiceProvider::class,
             //LecServiceProvider::class,
             //ValueObjectServiceProvider::class,

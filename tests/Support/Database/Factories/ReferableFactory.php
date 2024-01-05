@@ -1,8 +1,8 @@
 <?php
 
-namespace IBroStudio\DataObjectsRepository\Tests\Support\Database\Factories;
+namespace IBroStudio\DataRepository\Tests\Support\Database\Factories;
 
-use IBroStudio\DataObjectsRepository\Tests\Support\Models\Referable;
+use IBroStudio\DataRepository\Tests\Support\Models\Referable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ReferableFactory extends Factory

@@ -1,7 +1,7 @@
 <?php
 
-use IBroStudio\DataObjectsRepository\Tests\Support\DataObjects\WithEncryptableTextData;
-use IBroStudio\DataObjectsRepository\ValueObjects\EncryptableText;
+use IBroStudio\DataRepository\Tests\Support\DataObjects\WithEncryptableTextData;
+use IBroStudio\DataRepository\ValueObjects\EncryptableText;
 
 it('can build dto casting EncryptableText property', function () {
     $data = new WithEncryptableTextData(

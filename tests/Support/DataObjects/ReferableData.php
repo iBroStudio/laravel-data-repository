@@ -1,6 +1,6 @@
 <?php
 
-namespace IBroStudio\DataObjectsRepository\Tests\Support\DataObjects;
+namespace IBroStudio\DataRepository\Tests\Support\DataObjects;
 
 use Spatie\LaravelData\Data;
 

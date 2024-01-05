@@ -1,12 +1,13 @@
 <?php
 
-namespace IBroStudio\DataObjectsRepository;
+namespace IBroStudio\DataRepository;
 
-use IBroStudio\DataObjectsRepository\Commands\DataObjectsRepositoryCommand;
+use IBroStudio\DataRepository\Commands\DataRepositoryCommand;
+use MichaelRubel\ValueObjects\ValueObject;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class DataObjectsRepositoryServiceProvider extends PackageServiceProvider
+class DataRepositoryServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -17,8 +18,15 @@ class DataObjectsRepositoryServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('laravel-data-objects-repository')
-            ->hasCommand(DataObjectsRepositoryCommand::class)
+            ->hasCommand(DataRepositoryCommand::class)
             ->hasMigration('create_data_objects_repository_table');
+    }
+
+    public function packageRegistered()
+    {
+        ValueObject::macro('toJson', function () {
+            return json_encode($this->toArray());
+        });
     }
 }
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace IBroStudio\DataObjectsRepository\Casts;
+namespace IBroStudio\DataRepository\Casts;
 
-use IBroStudio\DataObjectsRepository\ValueObjects\EncryptableText;
+use IBroStudio\DataRepository\ValueObjects\EncryptableText;
 use Spatie\LaravelData\Casts\Cast;
 use Spatie\LaravelData\Support\DataProperty;
 

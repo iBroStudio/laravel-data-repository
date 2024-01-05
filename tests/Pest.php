@@ -1,5 +1,5 @@
 <?php
 
-use IBroStudio\DataObjectsRepository\Tests\TestCase;
+use IBroStudio\DataRepository\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);

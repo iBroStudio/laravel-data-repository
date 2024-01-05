@@ -1,12 +1,12 @@
 {
-    "name": "ibrostudio/laravel-data-objects-repository",
-    "description": "This is my package laravel-data-objects-repository",
+    "name": "ibrostudio/laravel-data-repository",
+    "description": "This is my package laravel-data-repository",
     "keywords": [
         "iBroStudio",
         "laravel",
-        "laravel-data-objects-repository"
+        "laravel-data-repository"
     ],
-    "homepage": "https://github.com/ibrostudio/laravel-data-objects-repository",
+    "homepage": "https://github.com/ibrostudio/laravel-data-repository",
     "license": "MIT",
     "authors": [
         {
@@ -19,7 +19,7 @@
     "require": {
         "php": "^8.2",
         "illuminate/contracts": "^10.0",
-        "michael-rubel/laravel-value-objects": "@dev",
+        "michael-rubel/laravel-value-objects": "^6.0",
         "spatie/laravel-data": "^3.11",
         "spatie/laravel-package-tools": "^1.14.0"
     },
@@ -37,13 +37,13 @@
     },
     "autoload": {
         "psr-4": {
-            "IBroStudio\\DataObjectsRepository\\": "src/",
-            "IBroStudio\\DataObjectsRepository\\Database\\Factories\\": "database/factories/"
+            "IBroStudio\\DataRepository\\": "src/",
+            "IBroStudio\\DataRepository\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "IBroStudio\\DataObjectsRepository\\Tests\\": "tests/",
+            "IBroStudio\\DataRepository\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -76,19 +76,13 @@
     "extra": {
         "laravel": {
             "providers": [
-                "IBroStudio\\DataObjectsRepository\\DataObjectsRepositoryServiceProvider"
+                "IBroStudio\\DataRepository\\DataRepositoryServiceProvider"
             ],
             "aliases": {
-                "DataObjectsRepository": "IBroStudio\\DataObjectsRepository\\Facades\\DataObjectsRepository"
+                "DataRepository": "IBroStudio\\DataRepository\\Facades\\DataRepository"
             }
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../laravel-value-objects"
-        }
-    ]
+    "prefer-stable": true
 }

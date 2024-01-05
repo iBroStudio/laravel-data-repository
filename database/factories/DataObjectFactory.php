@@ -1,10 +1,10 @@
 <?php
 
-namespace IBroStudio\DataObjectsRepository\Database\Factories;
+namespace IBroStudio\DataRepository\Database\Factories;
 
-use IBroStudio\DataObjectsRepository\Models\DataObject;
-use IBroStudio\DataObjectsRepository\Tests\Support\DataObjects\ReferableData;
-use IBroStudio\DataObjectsRepository\Tests\Support\Models\Referable;
+use IBroStudio\DataRepository\Models\DataObject;
+use IBroStudio\DataRepository\Tests\Support\DataObjects\ReferableData;
+use IBroStudio\DataRepository\Tests\Support\Models\Referable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DataObjectFactory extends Factory

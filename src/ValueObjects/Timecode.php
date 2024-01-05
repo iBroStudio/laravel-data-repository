@@ -1,6 +1,6 @@
 <?php
 
-namespace IBroStudio\DataObjectsRepository\ValueObjects;
+namespace IBroStudio\DataRepository\ValueObjects;
 
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;

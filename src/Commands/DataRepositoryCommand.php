@@ -1,10 +1,10 @@
 <?php
 
-namespace IBroStudio\DataObjectsRepository\Commands;
+namespace IBroStudio\DataRepository\Commands;
 
 use Illuminate\Console\Command;
 
-class DataObjectsRepositoryCommand extends Command
+class DataRepositoryCommand extends Command
 {
     public $signature = 'laravel-data-objects-repository';
 

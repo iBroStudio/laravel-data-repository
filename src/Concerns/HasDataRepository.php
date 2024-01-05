@@ -1,23 +1,27 @@
 <?php
 
-namespace IBroStudio\DataObjectsRepository\Concerns;
+namespace IBroStudio\DataRepository\Concerns;
 
-use IBroStudio\DataObjectsRepository\Models\DataObject;
-use IBroStudio\DataObjectsRepository\Relations\MorphOneDataObject;
+use IBroStudio\DataRepository\Models\DataObject;
+use IBroStudio\DataRepository\Relations\MorphManyDataObjects;
+use Illuminate\Database\Eloquent\Builder;
 
 trait HasDataRepository
 {
-    public function initializeHasDoRepository()
+    public function initializeHasDataRepository()
     {
-        $this->with[] = 'data_object';
+        $this->with[] = 'data_repository';
     }
 
-    public function data_object()
+    public function data_repository(?string $dataClass = null)
     {
-        return $this->morphOneDataObject(DataObject::class, 'referable');
+        return $this->morphManyDataObjects(DataObject::class, 'referable')
+            ->when($dataClass, function (Builder $query, string $dataClass) {
+                $query->where('class', $dataClass);
+            });
     }
 
-    public function morphOneDataObject($related, $name, $type = null, $id = null, $localKey = null)
+    public function morphManyDataObjects($related, $name, $type = null, $id = null, $localKey = null)
     {
         $instance = $this->newRelatedInstance($related);
 
@@ -27,6 +31,6 @@ trait HasDataRepository
 
         $localKey = $localKey ?: $this->getKeyName();
 
-        return new MorphOneDataObject($instance->newQuery(), $this, $table.'.'.$type, $table.'.'.$id, $localKey);
+        return new MorphManyDataObjects($instance->newQuery(), $this, $table.'.'.$type, $table.'.'.$id, $localKey);
     }
 }
