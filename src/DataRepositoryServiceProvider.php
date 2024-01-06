@@ -34,7 +34,7 @@ class DataRepositoryServiceProvider extends PackageServiceProvider
     {
         ValueObject::macro('toJson', function () {
 
-            return match(get_class($this)) {
+            return match (get_class($this)) {
                 Email::class => json_encode(['value' => $this->value()]),
                 FullName::class => json_encode(['value' => $this->value()]),
                 TaxNumber::class => json_encode(['number' => $this->value()]),

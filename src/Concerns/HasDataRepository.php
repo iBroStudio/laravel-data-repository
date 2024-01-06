@@ -21,7 +21,7 @@ trait HasDataRepository
             })
             ->when($valuesQuery, function (Builder $query, array $valuesQuery) {
                 foreach ($valuesQuery as $key => $value) {
-                    $query->where('values->' . $key, $value);
+                    $query->where('values->'.$key, $value);
                 }
             });
     }

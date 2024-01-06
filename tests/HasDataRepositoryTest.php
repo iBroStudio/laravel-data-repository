@@ -3,7 +3,6 @@
 use IBroStudio\DataRepository\Models\DataObject;
 use IBroStudio\DataRepository\Tests\Support\DataObjects\ReferableData;
 use IBroStudio\DataRepository\Tests\Support\Models\Referable;
-use IBroStudio\Teamable\ValueObjects\CurrentTeam;
 use MichaelRubel\ValueObjects\Collection\Complex\ClassString;
 use MichaelRubel\ValueObjects\Collection\Complex\Email;
 use MichaelRubel\ValueObjects\Collection\Complex\FullName;
@@ -48,14 +47,14 @@ it('can save complex value object', function ($data) {
     expect($dataFromRepository->first())->toBeInstanceOf(DataObject::class)
         ->and($dataFromRepository->values())->toEqual($data);
 })->with([
-    'classString' => fn() => ClassString::make(fake()->name()),
-    'email' => fn() => Email::make(fake()->email()),
-    'fullName' => fn() => FullName::make(fake()->name()),
-    'name' => fn() => Name::make(fake()->name()),
-    'phone' => fn() => Phone::make((string) fake()->randomNumber(9)),
-    'taxNumber' => fn() => TaxNumber::make(number: (string) fake()->randomNumber(9), prefix: 'FR'),
-    'url' => fn() => Url::make(fake()->url()),
-    'uuid' => fn() => Uuid::make(fake()->uuid()),
+    'classString' => fn () => ClassString::make(fake()->name()),
+    'email' => fn () => Email::make(fake()->email()),
+    'fullName' => fn () => FullName::make(fake()->name()),
+    'name' => fn () => Name::make(fake()->name()),
+    'phone' => fn () => Phone::make((string) fake()->randomNumber(9)),
+    'taxNumber' => fn () => TaxNumber::make(number: (string) fake()->randomNumber(9), prefix: 'FR'),
+    'url' => fn () => Url::make(fake()->url()),
+    'uuid' => fn () => Uuid::make(fake()->uuid()),
 ]);
 
 it('can save only one value per referable type', function () {
