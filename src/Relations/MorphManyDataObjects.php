@@ -9,10 +9,11 @@ use Spatie\LaravelData\Data;
 
 class MorphManyDataObjects extends MorphMany
 {
-    public function add(Data|ValueObject $data): Model
+    public function add(Data|ValueObject $data, array $valuesAttributes = []): Model
     {
         return parent::updateOrCreate(
             attributes: [
+                ...$valuesAttributes,
                 'class' => get_class($data),
             ],
             values: [

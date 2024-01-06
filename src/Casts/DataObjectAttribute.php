@@ -11,11 +11,11 @@ class DataObjectAttribute implements CastsAttributes
     {
         if (isset($attributes[$key])) {
 
-            return $attributes['class']::from(
-                is_subclass_of($attributes['class'], ValueObject::class)
-                    ? current(json_decode($value))
-                    : json_decode($value, true)
-            );
+            if (is_subclass_of($attributes['class'], ValueObject::class)) {
+                return $attributes['class']::from(...json_decode($value, true));
+            }
+
+            return $attributes['class']::from(json_decode($value, true));
         }
 
         return null;

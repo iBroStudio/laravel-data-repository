@@ -37,7 +37,7 @@ class TestCase extends Orchestra
         $migration = include __DIR__.'/Support/Database/Migrations/create_referables_table.php.stub';
         $migration->up();
 
-        $migration = include __DIR__.'/../database/migrations/create_data_objects_repository_table.php.stub';
+        $migration = include __DIR__.'/../database/migrations/create_data_repository_table.php.stub';
         $migration->up();
     }
 }

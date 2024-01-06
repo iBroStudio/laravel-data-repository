@@ -3,8 +3,19 @@
 use IBroStudio\DataRepository\Models\DataObject;
 use IBroStudio\DataRepository\Tests\Support\DataObjects\ReferableData;
 use IBroStudio\DataRepository\Tests\Support\Models\Referable;
+use IBroStudio\Teamable\ValueObjects\CurrentTeam;
+use MichaelRubel\ValueObjects\Collection\Complex\ClassString;
+use MichaelRubel\ValueObjects\Collection\Complex\Email;
+use MichaelRubel\ValueObjects\Collection\Complex\FullName;
+use MichaelRubel\ValueObjects\Collection\Complex\Name;
+use MichaelRubel\ValueObjects\Collection\Complex\Phone;
 use MichaelRubel\ValueObjects\Collection\Complex\TaxNumber;
+use MichaelRubel\ValueObjects\Collection\Complex\Url;
+use MichaelRubel\ValueObjects\Collection\Complex\Uuid;
+use MichaelRubel\ValueObjects\Collection\Primitive\Boolean;
+use MichaelRubel\ValueObjects\Collection\Primitive\Number;
 use MichaelRubel\ValueObjects\Collection\Primitive\Text;
+use MichaelRubel\ValueObjects\ValueObject;
 
 it('can save data object', function () {
     $referable = Referable::factory()->create();
@@ -16,25 +27,36 @@ it('can save data object', function () {
         ->and($dataFromRepository->values())->toEqual($data);
 });
 
-it('can save simple value object', function () {
+it('can save simple value object', function (ValueObject $data) {
     $referable = Referable::factory()->create();
-    $data = Text::make(fake()->name());
     $referable->data_repository()->add($data);
-    $dataFromRepository = $referable->data_repository(Text::class);
+    $dataFromRepository = $referable->data_repository($data::class);
 
     expect($dataFromRepository->first())->toBeInstanceOf(DataObject::class)
         ->and($dataFromRepository->values())->toEqual($data);
-});
+})->with([
+    'text' => Text::make(fake()->name()),
+    'boolean' => Boolean::make(fake()->boolean()),
+    'number' => Number::make(fake()->randomNumber()),
+]);
 
-it('can save complex value object', function () {
+it('can save complex value object', function ($data) {
     $referable = Referable::factory()->create();
-    $data = TaxNumber::make(number: (string) fake()->randomNumber(9), prefix: 'FR');
     $referable->data_repository()->add($data);
-    $dataFromRepository = $referable->data_repository(TaxNumber::class);
+    $dataFromRepository = $referable->data_repository($data::class);
 
     expect($dataFromRepository->first())->toBeInstanceOf(DataObject::class)
         ->and($dataFromRepository->values())->toEqual($data);
-});
+})->with([
+    'classString' => fn() => ClassString::make(fake()->name()),
+    'email' => fn() => Email::make(fake()->email()),
+    'fullName' => fn() => FullName::make(fake()->name()),
+    'name' => fn() => Name::make(fake()->name()),
+    'phone' => fn() => Phone::make((string) fake()->randomNumber(9)),
+    'taxNumber' => fn() => TaxNumber::make(number: (string) fake()->randomNumber(9), prefix: 'FR'),
+    'url' => fn() => Url::make(fake()->url()),
+    'uuid' => fn() => Uuid::make(fake()->uuid()),
+]);
 
 it('can save only one value per referable type', function () {
     $referable = Referable::factory()->create();
@@ -54,4 +76,45 @@ it('can load referable with data_repository', function () {
     );
 
     expect($referable->relationLoaded('data_repository'))->toBeTrue();
+});
+
+it('can query data with values constraints', function () {
+    $referable = Referable::factory()->create();
+    $data = new ReferableData(name: fake()->name());
+    $referable->data_repository()->add($data);
+    $dataFromRepository = $referable->data_repository(
+        dataClass: ReferableData::class,
+        valuesQuery: ['name' => $data->name]
+    );
+
+    expect($dataFromRepository->values())->toEqual($data);
+});
+
+it('can save data with values constraints', function () {
+    $referable = Referable::factory()->create();
+    $data = new ReferableData(name: fake()->name());
+    $data2 = new ReferableData(name: fake()->name());
+    $referable->data_repository()->add($data);
+    $referable->data_repository()->add(
+        data: $data2,
+        valuesAttributes: [
+            'values->name' => $data2->name,
+        ]
+    );
+
+    expect($referable->data_repository(ReferableData::class)->count())->toBe(2)
+        ->and(
+            $referable->data_repository(
+                dataClass: ReferableData::class,
+                valuesQuery: ['name' => $data->name]
+            )
+                ->values()
+        )->toEqual($data)
+        ->and(
+            $referable->data_repository(
+                dataClass: ReferableData::class,
+                valuesQuery: ['name' => $data2->name]
+            )
+                ->values()
+        )->toEqual($data2);
 });
