@@ -9,11 +9,11 @@ use MichaelRubel\ValueObjects\ValueObject;
 
 class Timecode extends ValueObject
 {
-    protected int $hours;
+    private int $hours;
 
-    protected int $minutes;
+    private int $minutes;
 
-    protected float $seconds;
+    private float $seconds;
 
     public function __construct(float|string $value)
     {

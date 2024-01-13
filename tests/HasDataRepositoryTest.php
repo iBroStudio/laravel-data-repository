@@ -3,6 +3,8 @@
 use IBroStudio\DataRepository\Models\DataObject;
 use IBroStudio\DataRepository\Tests\Support\DataObjects\ReferableData;
 use IBroStudio\DataRepository\Tests\Support\Models\Referable;
+use IBroStudio\DataRepository\ValueObjects\BasicAuthentication;
+use IBroStudio\DataRepository\ValueObjects\EncryptableText;
 use MichaelRubel\ValueObjects\Collection\Complex\ClassString;
 use MichaelRubel\ValueObjects\Collection\Complex\Email;
 use MichaelRubel\ValueObjects\Collection\Complex\FullName;
@@ -52,9 +54,17 @@ it('can save complex value object', function ($data) {
     'fullName' => fn () => FullName::make(fake()->name()),
     'name' => fn () => Name::make(fake()->name()),
     'phone' => fn () => Phone::make((string) fake()->randomNumber(9)),
-    'taxNumber' => fn () => TaxNumber::make(number: (string) fake()->randomNumber(9), prefix: 'FR'),
+    'taxNumber' => fn () => TaxNumber::make(
+        number: (string) fake()->randomNumber(9),
+        prefix: 'FR'
+    ),
     'url' => fn () => Url::make(fake()->url()),
     'uuid' => fn () => Uuid::make(fake()->uuid()),
+    'encryptable' => fn () => EncryptableText::make(fake()->password()),
+    'basic-auth' => fn () => BasicAuthentication::make(
+        username: fake()->userName(),
+        password: EncryptableText::make(fake()->password()),
+    ),
 ]);
 
 it('can save only one value per referable type', function () {

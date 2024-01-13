@@ -3,6 +3,7 @@
 namespace IBroStudio\DataRepository;
 
 use IBroStudio\DataRepository\Commands\DataRepositoryCommand;
+use Illuminate\Support\Facades\Config;
 use MichaelRubel\ValueObjects\Collection\Complex\Email;
 use MichaelRubel\ValueObjects\Collection\Complex\FullName;
 use MichaelRubel\ValueObjects\Collection\Complex\TaxNumber;
@@ -14,11 +15,6 @@ class DataRepositoryServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
         $package
             ->name('laravel-data-objects-repository')
             ->hasCommand(DataRepositoryCommand::class)
@@ -28,6 +24,15 @@ class DataRepositoryServiceProvider extends PackageServiceProvider
     public function packageRegistered()
     {
         $this->registerValueObjectMacros();
+
+    }
+
+    public function packageBooted()
+    {
+        Config::set('data', array_merge_recursive(
+            require __DIR__.'/../config/spatie-data.php',
+            Config::get('data')
+        ));
     }
 
     protected function registerValueObjectMacros()

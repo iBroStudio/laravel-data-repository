@@ -2,6 +2,7 @@
 
 namespace IBroStudio\DataRepository\Casts;
 
+use IBroStudio\ModelDisk\DataObjects\FtpConfig;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use MichaelRubel\ValueObjects\ValueObject;
 

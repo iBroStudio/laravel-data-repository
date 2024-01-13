@@ -13,7 +13,7 @@ trait HasDataRepository
         $this->with[] = 'data_repository';
     }
 
-    public function data_repository(?string $dataClass = null, ?array $valuesQuery = null)
+    public function data_repository(?string $dataClass = null, ?array $valuesQuery = null): MorphManyDataObjects
     {
         return $this->morphManyDataObjects(DataObject::class, 'referable')
             ->when($dataClass, function (Builder $query, string $dataClass) {
@@ -26,7 +26,7 @@ trait HasDataRepository
             });
     }
 
-    public function morphManyDataObjects($related, $name, $type = null, $id = null, $localKey = null)
+    public function morphManyDataObjects($related, $name, $type = null, $id = null, $localKey = null): MorphManyDataObjects
     {
         $instance = $this->newRelatedInstance($related);
 
