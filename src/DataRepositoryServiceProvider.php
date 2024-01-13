@@ -31,7 +31,7 @@ class DataRepositoryServiceProvider extends PackageServiceProvider
     {
         Config::set('data', array_merge_recursive(
             require __DIR__.'/../config/spatie-data.php',
-            Config::get('data')
+            Config::get('data') ?? []
         ));
     }
 
