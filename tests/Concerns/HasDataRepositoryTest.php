@@ -3,8 +3,10 @@
 use IBroStudio\DataRepository\Models\DataObject;
 use IBroStudio\DataRepository\Tests\Support\DataObjects\ReferableData;
 use IBroStudio\DataRepository\Tests\Support\Models\Referable;
+use IBroStudio\DataRepository\ValueObjects\Authentication;
 use IBroStudio\DataRepository\ValueObjects\BasicAuthentication;
 use IBroStudio\DataRepository\ValueObjects\EncryptableText;
+use IBroStudio\DataRepository\ValueObjects\SshAuthentication;
 use MichaelRubel\ValueObjects\Collection\Complex\ClassString;
 use MichaelRubel\ValueObjects\Collection\Complex\Email;
 use MichaelRubel\ValueObjects\Collection\Complex\FullName;
@@ -20,7 +22,16 @@ use MichaelRubel\ValueObjects\ValueObject;
 
 it('can save data object', function () {
     $referable = Referable::factory()->create();
-    $data = new ReferableData(name: fake()->name());
+    $data = new ReferableData(
+        name: fake()->name(),
+        password: EncryptableText::make(fake()->password()),
+        authentication: Authentication::make(
+            SshAuthentication::make(
+                privateKey: EncryptableText::make(fake()->macAddress()),
+                passphrase: EncryptableText::make(fake()->password()),
+            )
+        )
+    );
     $referable->data_repository()->add($data);
     $dataFromRepository = $referable->data_repository(ReferableData::class);
 
@@ -65,12 +76,46 @@ it('can save complex value object', function ($data) {
         username: fake()->userName(),
         password: EncryptableText::make(fake()->password()),
     ),
+    'ssh-auth' => fn () => SshAuthentication::make(
+        privateKey: EncryptableText::make(fake()->macAddress()),
+        passphrase: EncryptableText::make(fake()->password()),
+    ),
+    'authentication-with-basic' => fn () => Authentication::make(
+        BasicAuthentication::make(
+            username: fake()->userName(),
+            password: EncryptableText::make(fake()->password()),
+        )
+    ),
+    'authentication-with-ssh' => fn () => Authentication::make(
+        SshAuthentication::make(
+            privateKey: EncryptableText::make(fake()->macAddress()),
+            passphrase: EncryptableText::make(fake()->password()),
+        )
+    ),
 ]);
 
 it('can save only one value per referable type', function () {
     $referable = Referable::factory()->create();
-    $data = new ReferableData(name: fake()->name());
-    $data2 = new ReferableData(name: fake()->name());
+    $data = new ReferableData(
+        name: fake()->name(),
+        password: EncryptableText::make(fake()->password()),
+        authentication: Authentication::make(
+            SshAuthentication::make(
+                privateKey: EncryptableText::make(fake()->macAddress()),
+                passphrase: EncryptableText::make(fake()->password()),
+            )
+        )
+    );
+    $data2 = new ReferableData(
+        name: fake()->name(),
+        password: EncryptableText::make(fake()->password()),
+        authentication: Authentication::make(
+            SshAuthentication::make(
+                privateKey: EncryptableText::make(fake()->macAddress()),
+                passphrase: EncryptableText::make(fake()->password()),
+            )
+        )
+    );
     $referable->data_repository()->add($data);
     $referable->data_repository()->add($data2);
     $dataFromRepository = $referable->data_repository(ReferableData::class);
@@ -89,7 +134,16 @@ it('can load referable with data_repository', function () {
 
 it('can query data with values constraints', function () {
     $referable = Referable::factory()->create();
-    $data = new ReferableData(name: fake()->name());
+    $data = new ReferableData(
+        name: fake()->name(),
+        password: EncryptableText::make(fake()->password()),
+        authentication: Authentication::make(
+            SshAuthentication::make(
+                privateKey: EncryptableText::make(fake()->macAddress()),
+                passphrase: EncryptableText::make(fake()->password()),
+            )
+        )
+    );
     $referable->data_repository()->add($data);
     $dataFromRepository = $referable->data_repository(
         dataClass: ReferableData::class,
@@ -101,8 +155,26 @@ it('can query data with values constraints', function () {
 
 it('can save data with values constraints', function () {
     $referable = Referable::factory()->create();
-    $data = new ReferableData(name: fake()->name());
-    $data2 = new ReferableData(name: fake()->name());
+    $data = new ReferableData(
+        name: fake()->name(),
+        password: EncryptableText::make(fake()->password()),
+        authentication: Authentication::make(
+            SshAuthentication::make(
+                privateKey: EncryptableText::make(fake()->macAddress()),
+                passphrase: EncryptableText::make(fake()->password()),
+            )
+        )
+    );
+    $data2 = new ReferableData(
+        name: fake()->name(),
+        password: EncryptableText::make(fake()->password()),
+        authentication: Authentication::make(
+            SshAuthentication::make(
+                privateKey: EncryptableText::make(fake()->macAddress()),
+                passphrase: EncryptableText::make(fake()->password()),
+            )
+        )
+    );
     $referable->data_repository()->add($data);
     $referable->data_repository()->add(
         data: $data2,
