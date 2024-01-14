@@ -1,12 +1,14 @@
 <?php
 
-namespace IBroStudio\DataRepository\ValueObjects;
+namespace IBroStudio\DataRepository\ValueObjects\Authentication;
 
+use IBroStudio\DataRepository\Contracts\Authentication;
+use IBroStudio\DataRepository\ValueObjects\EncryptableText;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use MichaelRubel\ValueObjects\ValueObject;
 
-class BasicAuthentication extends ValueObject
+class BasicAuthentication extends ValueObject implements Authentication
 {
     private string $username;
 
@@ -59,6 +61,14 @@ class BasicAuthentication extends ValueObject
         return [
             'username' => $this->username,
             'password' => $this->password->value(),
+        ];
+    }
+
+    public function toDecryptedArray(): array
+    {
+        return [
+            'username' => $this->username,
+            'password' => $this->password->decrypt(),
         ];
     }
 }

@@ -6,8 +6,8 @@ use IBroStudio\DataRepository\Models\DataObject;
 use IBroStudio\DataRepository\Tests\Support\DataObjects\ReferableData;
 use IBroStudio\DataRepository\Tests\Support\Models\Referable;
 use IBroStudio\DataRepository\ValueObjects\Authentication;
+use IBroStudio\DataRepository\ValueObjects\Authentication\SshAuthentication;
 use IBroStudio\DataRepository\ValueObjects\EncryptableText;
-use IBroStudio\DataRepository\ValueObjects\SshAuthentication;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DataObjectFactory extends Factory

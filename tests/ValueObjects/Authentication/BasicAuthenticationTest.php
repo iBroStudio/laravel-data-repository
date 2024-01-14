@@ -1,6 +1,6 @@
 <?php
 
-use IBroStudio\DataRepository\ValueObjects\BasicAuthentication;
+use IBroStudio\DataRepository\ValueObjects\Authentication\BasicAuthentication;
 use IBroStudio\DataRepository\ValueObjects\EncryptableText;
 
 it('can instantiate', function (string $username, EncryptableText|string $password) {
