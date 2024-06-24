@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Validator;
 use InvalidArgumentException;
 use MichaelRubel\ValueObjects\Collection\Primitive\Text;
 
-class EncryptableText extends Text
+final class EncryptableText extends Text
 {
     public static function make(mixed ...$values): static
     {
         $value = current($values);
 
-        return new static(
+        return new self(
             self::isEncrypted($value)
                 ? $value
                 : Crypt::encryptString($value)
@@ -43,6 +43,6 @@ class EncryptableText extends Text
             'value' => new Encrypted,
         ]);
 
-        return ! (bool) $validator->fails();
+        return ! $validator->fails();
     }
 }
