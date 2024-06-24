@@ -6,11 +6,11 @@ use Spatie\LaravelData\Support\DataProperty;
 use Spatie\LaravelData\Support\Transformation\TransformationContext;
 use Spatie\LaravelData\Transformers\Transformer;
 
-class EncryptableTextTransformer implements Transformer
+class ValueObjectTransformer implements Transformer
 {
-    public function transform(DataProperty $property, mixed $value, TransformationContext $context): string
+    public function transform(DataProperty $property, mixed $value, TransformationContext $context): mixed
     {
-        /** @var \IBroStudio\DataRepository\ValueObjects\EncryptableText $value */
+        /** @var \MichaelRubel\ValueObjects\ValueObject $value */
         return $value->value();
     }
 }

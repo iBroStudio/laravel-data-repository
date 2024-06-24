@@ -24,6 +24,7 @@ class MorphManyDataObjects extends MorphMany
 
     public function values(): Data|ValueObject
     {
+        // @phpstan-ignore-next-line
         return $this->query->firstOrFail()->values;
     }
 }

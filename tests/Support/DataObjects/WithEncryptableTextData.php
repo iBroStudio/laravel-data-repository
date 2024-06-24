@@ -10,6 +10,5 @@ class WithEncryptableTextData extends Data
     public function __construct(
         public string $name,
         public EncryptableText $secret
-    ) {
-    }
+    ) {}
 }

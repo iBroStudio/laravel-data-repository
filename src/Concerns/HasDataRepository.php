@@ -15,10 +15,13 @@ trait HasDataRepository
 
     public function data_repository(?string $dataClass = null, ?array $valuesQuery = null): MorphManyDataObjects
     {
+        // @phpstan-ignore-next-line
         return $this->morphManyDataObjects(DataObject::class, 'referable')
+            // @phpstan-ignore-next-line
             ->when($dataClass, function (Builder $query, string $dataClass) {
                 $query->where('class', $dataClass);
             })
+            // @phpstan-ignore-next-line
             ->when($valuesQuery, function (Builder $query, array $valuesQuery) {
                 foreach ($valuesQuery as $key => $value) {
                     $query->where('values->'.$key, $value);

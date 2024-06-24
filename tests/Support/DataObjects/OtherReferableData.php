@@ -8,6 +8,5 @@ class OtherReferableData extends Data
 {
     public function __construct(
         public string $name,
-    ) {
-    }
+    ) {}
 }

@@ -5,11 +5,13 @@ namespace IBroStudio\DataRepository\Database\Factories;
 use IBroStudio\DataRepository\Models\DataObject;
 use IBroStudio\DataRepository\Tests\Support\DataObjects\ReferableData;
 use IBroStudio\DataRepository\Tests\Support\Models\Referable;
-use IBroStudio\DataRepository\ValueObjects\Authentication;
 use IBroStudio\DataRepository\ValueObjects\Authentication\SshAuthentication;
 use IBroStudio\DataRepository\ValueObjects\EncryptableText;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\IBroStudio\DataRepository\Models\DataObject>
+ */
 class DataObjectFactory extends Factory
 {
     protected $model = DataObject::class;
@@ -23,11 +25,10 @@ class DataObjectFactory extends Factory
             'values' => new ReferableData(
                 name: fake()->name(),
                 password: EncryptableText::make(fake()->password()),
-                authentication: Authentication::make(
-                    SshAuthentication::make(
-                        privateKey: EncryptableText::make(fake()->macAddress()),
-                        passphrase: EncryptableText::make(fake()->password()),
-                    )
+                authentication: SshAuthentication::make(
+                    username: fake()->userName(),
+                    privateKey: EncryptableText::make(fake()->macAddress()),
+                    passphrase: EncryptableText::make(fake()->password()),
                 )
             ),
         ];
