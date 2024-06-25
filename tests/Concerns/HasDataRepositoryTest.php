@@ -30,15 +30,6 @@ it('can save data object', function () {
             passphrase: EncryptableText::make(fake()->password()),
         )
     );
-    $data = ReferableData::from([
-        'name' => fake()->name(),
-        'password' => EncryptableText::make(fake()->password()),
-        'authentication' => SshAuthentication::make(
-            username: fake()->userName(),
-            privateKey: EncryptableText::make(fake()->macAddress()),
-            passphrase: EncryptableText::make(fake()->password()),
-        ),
-    ]);
 
     $referable->data_repository()->add($data);
 
@@ -101,7 +92,7 @@ it('can save complex value object', function ($data) {
     ),
 ]);
 
-it('can save only one value per referable type', function () {
+it('can save only one value per referable type without constraint', function () {
     $referable = Referable::factory()->create();
     $data = new ReferableData(
         name: fake()->name(),

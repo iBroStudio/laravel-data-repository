@@ -8,7 +8,7 @@ class DataRepositoryInstallCommand extends Command
 {
     public $signature = 'data-repository:install';
 
-    public $description = 'My command';
+    public $description = 'Laravel Data Objects Repository installer';
 
     public function handle(): int
     {

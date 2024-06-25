@@ -8,7 +8,6 @@ use MichaelRubel\ValueObjects\Collection\Complex\Email;
 use MichaelRubel\ValueObjects\Collection\Complex\FullName;
 use MichaelRubel\ValueObjects\Collection\Complex\TaxNumber;
 use MichaelRubel\ValueObjects\ValueObject;
-use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -22,13 +21,13 @@ class DataRepositoryServiceProvider extends PackageServiceProvider
             ->hasMigration('create_data_repository_table');
     }
 
-    public function packageRegistered()
+    public function packageRegistered(): void
     {
         $this->registerValueObjectMacros();
 
     }
 
-    public function packageBooted()
+    public function packageBooted(): void
     {
         Config::set('data', array_merge_recursive(
             require __DIR__.'/../config/spatie-data.php',
@@ -36,7 +35,7 @@ class DataRepositoryServiceProvider extends PackageServiceProvider
         ));
     }
 
-    protected function registerValueObjectMacros()
+    protected function registerValueObjectMacros(): void
     {
         ValueObject::macro('toJson', function () {
 
@@ -49,19 +48,3 @@ class DataRepositoryServiceProvider extends PackageServiceProvider
         });
     }
 }
-
-/*
-TaxNumber::macro('toJson', function () {
-            return json_encode(['number' => $this->value()]);
-        });
-
-->hasInstallCommand(function(InstallCommand $command) {
-    $command
-        ->publishConfigFile()
-        ->publishAssets()
-        ->publishMigrations()
-        ->askToRunMigrations()
-        ->copyAndRegisterServiceProviderInApp()
-        ->askToStarRepoOnGitHub('your-vendor/your-repo-name')
-            });
-*/
