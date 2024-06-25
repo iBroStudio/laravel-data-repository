@@ -76,10 +76,7 @@
         "laravel": {
             "providers": [
                 "IBroStudio\\DataRepository\\DataRepositoryServiceProvider"
-            ],
-            "aliases": {
-                "DataRepository": "IBroStudio\\DataRepository\\Facades\\DataRepository"
-            }
+            ]
         }
     },
     "minimum-stability": "dev",
