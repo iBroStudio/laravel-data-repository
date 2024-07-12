@@ -18,7 +18,7 @@ php artisan data-repository:install
 
 ## Usage
 
-Add the trait `IBroStudio\DataRepository\ConcernsHasDataRepository` to your Eloquent models.
+Add the trait `IBroStudio\DataRepository\Concerns\HasDataRepository` to your Eloquent models.
 
 The trait implements a `MorphManyDataObjects` relationship that extends `MorphMany`.
 
