@@ -33,21 +33,21 @@ it('can give prefixed version without prefix', function () {
 
 it('can increment major segment', function () {
     $version = SemanticVersion::make('1.0.0');
-    $version->increment(SemanticVersionSegments::MAJOR);
+    $incremented = $version->increment(SemanticVersionSegments::MAJOR);
 
-    expect($version->value())->toEqual('2.0.0');
+    expect($incremented->value())->toEqual('2.0.0');
 });
 
 it('can increment minor segment', function () {
     $version = SemanticVersion::make('1.0.0');
-    $version->increment(SemanticVersionSegments::MINOR);
+    $incremented = $version->increment(SemanticVersionSegments::MINOR);
 
-    expect($version->value())->toEqual('1.1.0');
+    expect($incremented->value())->toEqual('1.1.0');
 });
 
 it('can increment patch segment', function () {
     $version = SemanticVersion::make('1.0.0');
-    $version->increment(SemanticVersionSegments::PATCH);
+    $incremented = $version->increment(SemanticVersionSegments::PATCH);
 
-    expect($version->value())->toEqual('1.0.1');
+    expect($incremented->value())->toEqual('1.0.1');
 });

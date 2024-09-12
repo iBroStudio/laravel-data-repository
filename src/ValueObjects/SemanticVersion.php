@@ -24,9 +24,9 @@ class SemanticVersion extends ValueObject
 
     public function __construct(string $value)
     {
-        if (isset($this->hours)
-            || isset($this->minutes)
-            || isset($this->seconds)
+        if (isset($this->major)
+            || isset($this->minor)
+            || isset($this->patch)
         ) {
             throw new InvalidArgumentException(static::IMMUTABLE_MESSAGE);
         }
@@ -77,8 +77,11 @@ class SemanticVersion extends ValueObject
             });
     }
 
-    public function increment(SemanticVersionSegments $segment): void
+    public function increment(SemanticVersionSegments $segment): static
     {
-        $this->{$segment->value} = $this->{$segment->value} + 1;
+        $incremented = clone $this;
+        $incremented->{$segment->value} = $incremented->{$segment->value} + 1;
+
+        return $incremented;
     }
 }
