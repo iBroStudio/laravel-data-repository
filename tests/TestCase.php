@@ -20,7 +20,8 @@ class TestCase extends Orchestra
         );
     }
 
-    protected function getPackageProviders($app)
+    // @phpstan-ignore-next-line
+    protected function getPackageProviders($app): array
     {
         return [
             DataRepositoryServiceProvider::class,
@@ -30,7 +31,8 @@ class TestCase extends Orchestra
         ];
     }
 
-    public function getEnvironmentSetUp($app)
+    // @phpstan-ignore-next-line
+    public function getEnvironmentSetUp($app): void
     {
         config()->set('database.default', 'testing');
 

@@ -9,7 +9,7 @@ class ReferableFactory extends Factory
 {
     protected $model = Referable::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [];
     }

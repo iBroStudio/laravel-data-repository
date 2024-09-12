@@ -3,31 +3,18 @@
 use IBroStudio\DataRepository\Models\DataObject;
 use IBroStudio\DataRepository\Tests\Support\DataObjects\ReferableData;
 use IBroStudio\DataRepository\Tests\Support\Models\Referable;
-use IBroStudio\DataRepository\ValueObjects\Authentication\BasicAuthentication;
-use IBroStudio\DataRepository\ValueObjects\Authentication\SshAuthentication;
-use IBroStudio\DataRepository\ValueObjects\EncryptableText;
-use MichaelRubel\ValueObjects\Collection\Complex\ClassString;
-use MichaelRubel\ValueObjects\Collection\Complex\Email;
-use MichaelRubel\ValueObjects\Collection\Complex\FullName;
-use MichaelRubel\ValueObjects\Collection\Complex\Name;
-use MichaelRubel\ValueObjects\Collection\Complex\Phone;
-use MichaelRubel\ValueObjects\Collection\Complex\TaxNumber;
-use MichaelRubel\ValueObjects\Collection\Complex\Url;
-use MichaelRubel\ValueObjects\Collection\Complex\Uuid;
-use MichaelRubel\ValueObjects\Collection\Primitive\Boolean;
-use MichaelRubel\ValueObjects\Collection\Primitive\Number;
-use MichaelRubel\ValueObjects\Collection\Primitive\Text;
+use IBroStudio\DataRepository\ValueObjects;
 use MichaelRubel\ValueObjects\ValueObject;
 
 it('can save data object', function () {
     $referable = Referable::factory()->create();
     $data = new ReferableData(
         name: fake()->name(),
-        password: EncryptableText::make(fake()->password()),
-        authentication: SshAuthentication::make(
+        password: ValueObjects\EncryptableText::make(fake()->password()),
+        authentication: ValueObjects\Authentication\SshAuthentication::make(
             username: fake()->userName(),
-            privateKey: EncryptableText::make(fake()->macAddress()),
-            passphrase: EncryptableText::make(fake()->password()),
+            privateKey: ValueObjects\EncryptableText::make(fake()->macAddress()),
+            passphrase: ValueObjects\EncryptableText::make(fake()->password()),
         )
     );
 
@@ -47,9 +34,9 @@ it('can save simple value object', function (ValueObject $data) {
     expect($dataFromRepository->first())->toBeInstanceOf(DataObject::class)
         ->and($dataFromRepository->values()->toArray())->toMatchArray($data->toArray());
 })->with([
-    'text' => Text::make(fake()->name()),
-    'boolean' => Boolean::make(fake()->boolean()),
-    'number' => Number::make(fake()->randomNumber()),
+    'text' => ValueObjects\Text::make(fake()->name()),
+    'boolean' => ValueObjects\Boolean::make(fake()->boolean()),
+    'number' => ValueObjects\Number::make(fake()->randomNumber()),
 ]);
 
 it('can save complex value object', function ($data) {
@@ -60,35 +47,35 @@ it('can save complex value object', function ($data) {
     expect($dataFromRepository->first())->toBeInstanceOf(DataObject::class)
         ->and($dataFromRepository->values()->toArray())->toMatchArray($data->toArray());
 })->with([
-    'classString' => fn () => ClassString::make(fake()->name()),
-    'email' => fn () => Email::make(fake()->email()),
-    'fullName' => fn () => FullName::make(fake()->name()),
-    'name' => fn () => Name::make(fake()->name()),
-    'phone' => fn () => Phone::make((string) fake()->randomNumber(9)),
-    'taxNumber' => fn () => TaxNumber::make(
+    'classString' => fn () => ValueObjects\ClassString::make(fake()->name()),
+    'email' => fn () => ValueObjects\Email::make(fake()->email()),
+    'fullName' => fn () => ValueObjects\FullName::make(fake()->name()),
+    'name' => fn () => ValueObjects\Name::make(fake()->name()),
+    'phone' => fn () => ValueObjects\Phone::make((string) fake()->randomNumber(9)),
+    'taxNumber' => fn () => ValueObjects\TaxNumber::make(
         number: (string) fake()->randomNumber(9),
         prefix: 'FR'
     ),
-    'url' => fn () => Url::make(fake()->url()),
-    'uuid' => fn () => Uuid::make(fake()->uuid()),
-    'encryptable' => fn () => EncryptableText::make(fake()->password()),
-    'basic-auth' => fn () => BasicAuthentication::make(
+    'url' => fn () => ValueObjects\Url::make(fake()->url()),
+    'uuid' => fn () => ValueObjects\Uuid::make(fake()->uuid()),
+    'encryptable' => fn () => ValueObjects\EncryptableText::make(fake()->password()),
+    'basic-auth' => fn () => ValueObjects\Authentication\BasicAuthentication::make(
         username: fake()->userName(),
-        password: EncryptableText::make(fake()->password()),
+        password: ValueObjects\EncryptableText::make(fake()->password()),
     ),
-    'ssh-auth' => fn () => SshAuthentication::make(
+    'ssh-auth' => fn () => ValueObjects\Authentication\SshAuthentication::make(
         username: fake()->userName(),
-        privateKey: EncryptableText::make(fake()->macAddress()),
-        passphrase: EncryptableText::make(fake()->password()),
+        privateKey: ValueObjects\EncryptableText::make(fake()->macAddress()),
+        passphrase: ValueObjects\EncryptableText::make(fake()->password()),
     ),
-    'authentication-with-basic' => fn () => BasicAuthentication::make(
+    'authentication-with-basic' => fn () => ValueObjects\Authentication\BasicAuthentication::make(
         username: fake()->userName(),
-        password: EncryptableText::make(fake()->password()),
+        password: ValueObjects\EncryptableText::make(fake()->password()),
     ),
-    'authentication-with-ssh' => fn () => SshAuthentication::make(
+    'authentication-with-ssh' => fn () => ValueObjects\Authentication\SshAuthentication::make(
         username: fake()->userName(),
-        privateKey: EncryptableText::make(fake()->macAddress()),
-        passphrase: EncryptableText::make(fake()->password()),
+        privateKey: ValueObjects\EncryptableText::make(fake()->macAddress()),
+        passphrase: ValueObjects\EncryptableText::make(fake()->password()),
     ),
 ]);
 
@@ -96,20 +83,20 @@ it('can save only one value per referable type without constraint', function () 
     $referable = Referable::factory()->create();
     $data = new ReferableData(
         name: fake()->name(),
-        password: EncryptableText::make(fake()->password()),
-        authentication: SshAuthentication::make(
+        password: ValueObjects\EncryptableText::make(fake()->password()),
+        authentication: ValueObjects\Authentication\SshAuthentication::make(
             username: fake()->userName(),
-            privateKey: EncryptableText::make(fake()->macAddress()),
-            passphrase: EncryptableText::make(fake()->password()),
+            privateKey: ValueObjects\EncryptableText::make(fake()->macAddress()),
+            passphrase: ValueObjects\EncryptableText::make(fake()->password()),
         )
     );
     $data2 = new ReferableData(
         name: fake()->name(),
-        password: EncryptableText::make(fake()->password()),
-        authentication: SshAuthentication::make(
+        password: ValueObjects\EncryptableText::make(fake()->password()),
+        authentication: ValueObjects\Authentication\SshAuthentication::make(
             username: fake()->userName(),
-            privateKey: EncryptableText::make(fake()->macAddress()),
-            passphrase: EncryptableText::make(fake()->password()),
+            privateKey: ValueObjects\EncryptableText::make(fake()->macAddress()),
+            passphrase: ValueObjects\EncryptableText::make(fake()->password()),
         )
     );
     $referable->data_repository()->add($data);
@@ -132,11 +119,11 @@ it('can query data with values constraints', function () {
     $referable = Referable::factory()->create();
     $data = new ReferableData(
         name: fake()->name(),
-        password: EncryptableText::make(fake()->password()),
-        authentication: SshAuthentication::make(
+        password: ValueObjects\EncryptableText::make(fake()->password()),
+        authentication: ValueObjects\Authentication\SshAuthentication::make(
             username: fake()->userName(),
-            privateKey: EncryptableText::make(fake()->macAddress()),
-            passphrase: EncryptableText::make(fake()->password()),
+            privateKey: ValueObjects\EncryptableText::make(fake()->macAddress()),
+            passphrase: ValueObjects\EncryptableText::make(fake()->password()),
         )
     );
     $referable->data_repository()->add($data);
@@ -152,20 +139,20 @@ it('can save data with values constraints', function () {
     $referable = Referable::factory()->create();
     $data = new ReferableData(
         name: fake()->name(),
-        password: EncryptableText::make(fake()->password()),
-        authentication: SshAuthentication::make(
+        password: ValueObjects\EncryptableText::make(fake()->password()),
+        authentication: ValueObjects\Authentication\SshAuthentication::make(
             username: fake()->userName(),
-            privateKey: EncryptableText::make(fake()->macAddress()),
-            passphrase: EncryptableText::make(fake()->password()),
+            privateKey: ValueObjects\EncryptableText::make(fake()->macAddress()),
+            passphrase: ValueObjects\EncryptableText::make(fake()->password()),
         )
     );
     $data2 = new ReferableData(
         name: fake()->name(),
-        password: EncryptableText::make(fake()->password()),
-        authentication: SshAuthentication::make(
+        password: ValueObjects\EncryptableText::make(fake()->password()),
+        authentication: ValueObjects\Authentication\SshAuthentication::make(
             username: fake()->userName(),
-            privateKey: EncryptableText::make(fake()->macAddress()),
-            passphrase: EncryptableText::make(fake()->password()),
+            privateKey: ValueObjects\EncryptableText::make(fake()->macAddress()),
+            passphrase: ValueObjects\EncryptableText::make(fake()->password()),
         )
     );
     $referable->data_repository()->add($data);

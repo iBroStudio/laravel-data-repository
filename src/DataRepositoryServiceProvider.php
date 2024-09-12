@@ -18,7 +18,8 @@ class DataRepositoryServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-data-repository')
             ->hasCommand(DataRepositoryInstallCommand::class)
-            ->hasMigration('create_data_repository_table');
+            ->hasMigration('create_data_repository_table')
+            ->hasConfigFile();
     }
 
     public function packageRegistered(): void

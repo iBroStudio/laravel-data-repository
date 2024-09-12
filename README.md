@@ -1,6 +1,6 @@
 # Laravel Data Objects Repository
 
-Save in database and attach to eloquent models Data Transfer Objects (from Spatie's [Laravel Data](https://github.com/spatie/laravel-data)) and Value Objects (from Michael Rubel's [Laravel Value Objects](https://github.com/michael-rubel/laravel-value-objects)).
+Save Data Transfer Objects (from Spatie's [Laravel Data](https://github.com/spatie/laravel-data)) and Value Objects (from Michael Rubel's [Laravel Value Objects](https://github.com/michael-rubel/laravel-value-objects)) in database and attach to eloquent models.
 
 ## Installation
 

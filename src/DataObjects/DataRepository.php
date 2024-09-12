@@ -9,7 +9,7 @@ use Spatie\LaravelData\Data;
 
 abstract class DataRepository extends Data
 {
-    public function convertValueObjects()
+    public function convertValueObjects(): Collection
     {
         $class = new \ReflectionClass(static::class);
         $properties = $class->getProperties(\ReflectionProperty::IS_PUBLIC);

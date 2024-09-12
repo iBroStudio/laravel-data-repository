@@ -16,7 +16,7 @@ class DataObjectFactory extends Factory
 {
     protected $model = DataObject::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
             'referable_id' => Referable::factory(),

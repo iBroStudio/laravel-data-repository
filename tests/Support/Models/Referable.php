@@ -12,7 +12,7 @@ class Referable extends Model
     use HasDataRepository;
     use HasFactory;
 
-    protected static function newFactory()
+    protected static function newFactory(): ReferableFactory
     {
         return ReferableFactory::new();
     }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait HasDataRepository
 {
-    public function initializeHasDataRepository()
+    public function initializeHasDataRepository(): void
     {
         $this->with[] = 'data_repository';
     }
@@ -29,7 +29,7 @@ trait HasDataRepository
             });
     }
 
-    public function morphManyDataObjects($related, $name, $type = null, $id = null, $localKey = null): MorphManyDataObjects
+    public function morphManyDataObjects(string $related, string $name, ?string $type = null, ?string $id = null, ?string $localKey = null): MorphManyDataObjects
     {
         $instance = $this->newRelatedInstance($related);
 

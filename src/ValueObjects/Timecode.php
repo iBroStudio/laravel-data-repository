@@ -45,24 +45,24 @@ class Timecode extends ValueObject
 
     private function fromString(string $value): void
     {
-        $time = Str::of($value)->explode(':');
-
-        $time->each(function (string $item, int $key) {
-            switch ($key) {
-                case 0:
-                    $this->hours = (int) $item;
-                    break;
-                case 1:
-                    $this->minutes = (int) $item;
-                    break;
-                case 2:
-                    $this->seconds = (float) $item;
-                    break;
-                case 3:
-                    $this->seconds = $this->seconds + (float) "0.$item";
-                    break;
-            }
-        });
+        Str::of($value)
+            ->explode(':')
+            ->each(function (string $item, int $key) {
+                switch ($key) {
+                    case 0:
+                        $this->hours = (int) $item;
+                        break;
+                    case 1:
+                        $this->minutes = (int) $item;
+                        break;
+                    case 2:
+                        $this->seconds = (float) $item;
+                        break;
+                    case 3:
+                        $this->seconds = $this->seconds + (float) "0.$item";
+                        break;
+                }
+            });
     }
 
     /**

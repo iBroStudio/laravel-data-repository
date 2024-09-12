@@ -4,6 +4,7 @@ namespace IBroStudio\DataRepository\Models;
 
 use IBroStudio\DataRepository\Casts\DataObjectAttribute;
 use IBroStudio\DataRepository\Database\Factories\DataObjectFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -25,7 +26,7 @@ class DataObject extends Model
         return $this->morphTo();
     }
 
-    protected static function newFactory()
+    protected static function newFactory(): Factory|DataObjectFactory
     {
         return DataObjectFactory::new();
     }
