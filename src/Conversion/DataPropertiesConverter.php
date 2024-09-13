@@ -29,9 +29,9 @@ class DataPropertiesConverter
                 ->getProperties(ReflectionProperty::IS_PUBLIC)
         );
 
-        $this->map = new Collection();
+        $this->map = new Collection;
 
-        $this->mapper = new DataPropertiesMapper();
+        $this->mapper = new DataPropertiesMapper;
     }
 
     public function convert(array $data): array|Collection

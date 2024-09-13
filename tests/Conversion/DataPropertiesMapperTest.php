@@ -18,7 +18,7 @@ function getInstances(string $key): array
     $property = $dataClass->getProperty($key);
 
     return [
-        new DataPropertiesMapper(),
+        new DataPropertiesMapper,
         $converter,
         $property,
         // @phpstan-ignore-next-line
@@ -284,7 +284,7 @@ it('can map Enum property', function () {
 });
 
 it('throws exception if converter is not defined', function () {
-    $mapper = new DataPropertiesMapper();
+    $mapper = new DataPropertiesMapper;
     $dataClass = new \ReflectionClass(ConvertiblesData::class);
     $property = $dataClass->getProperty('simpleLaravelData');
     // @phpstan-ignore-next-line

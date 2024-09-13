@@ -13,7 +13,7 @@ abstract class DataRepository extends Data
     {
         $class = new \ReflectionClass(static::class);
         $properties = $class->getProperties(\ReflectionProperty::IS_PUBLIC);
-        $data = new Collection();
+        $data = new Collection;
 
         foreach ($properties as $property) {
             if (is_a($this->{$property->name}, ValueObject::class)) {

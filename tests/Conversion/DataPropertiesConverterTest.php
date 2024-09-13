@@ -33,7 +33,7 @@ it('can convert data with a pipeline', function () {
     }
 
     $manager = (new DataPropertiesConverter(ConvertiblesData::class));
-    $manager->data = new Collection();
+    $manager->data = new Collection;
 
     $convert = app(Pipeline::class)
         ->send($manager)

@@ -22,7 +22,7 @@ class DataPropertiesMapper
     public function mapProperty(ReflectionProperty $property, ReflectionClass $reflection): ?array
     {
         if (! isset($this->converter)) {
-            throw new MissingConverterException();
+            throw new MissingConverterException;
         }
 
         if ($this->converter->validate($reflection, $property)) {

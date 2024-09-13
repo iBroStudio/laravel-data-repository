@@ -7,7 +7,7 @@ use IBroStudio\DataRepository\Enums\Timezones;
 use IBroStudio\DataRepository\Tests\Support\DataObjects\ConvertiblesData;
 
 it('can validate property', function () {
-    $converter = new EnumConverter();
+    $converter = new EnumConverter;
     $dataClass = new \ReflectionClass(ConvertiblesData::class);
 
     $valid_property = $dataClass->getProperty('countryEnum');
@@ -22,7 +22,7 @@ it('can validate property', function () {
 });
 
 it('can convert property', function () {
-    $converter = new EnumConverter();
+    $converter = new EnumConverter;
     $dataClass = new \ReflectionClass(ConvertiblesData::class);
     $data = [
         'countryEnum' => 'FR',

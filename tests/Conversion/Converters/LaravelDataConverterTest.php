@@ -8,7 +8,7 @@ use IBroStudio\DataRepository\Tests\Support\DataObjects\WithEncryptableTextData;
 use IBroStudio\DataRepository\ValueObjects\EncryptableText;
 
 it('can validate property', function () {
-    $converter = new LaravelDataConverter();
+    $converter = new LaravelDataConverter;
     $dataClass = new \ReflectionClass(ConvertiblesData::class);
 
     $valid_property = $dataClass->getProperty('simpleLaravelData');
@@ -23,7 +23,7 @@ it('can validate property', function () {
 });
 
 it('can convert property', function () {
-    $converter = new LaravelDataConverter();
+    $converter = new LaravelDataConverter;
     $dataClass = new \ReflectionClass(ConvertiblesData::class);
     $data = [
         'simpleLaravelData' => [

@@ -6,7 +6,7 @@ use IBroStudio\DataRepository\Tests\Support\DataObjects\ConvertiblesData;
 use IBroStudio\DataRepository\ValueObjects;
 
 it('can validate property class', function () {
-    $converter = new ObjectValueConverter();
+    $converter = new ObjectValueConverter;
     $dataClass = new \ReflectionClass(ConvertiblesData::class);
 
     $valid_property = $dataClass->getProperty('text');
@@ -21,7 +21,7 @@ it('can validate property class', function () {
 });
 
 it('can convert property', function (string $key, mixed $data, string $expectedClass) {
-    $converter = new ObjectValueConverter();
+    $converter = new ObjectValueConverter;
     $dataClass = new \ReflectionClass(ConvertiblesData::class);
     $property = $dataClass->getProperty($key);
     $reflection = new \ReflectionClass($property->getType()->getName());
