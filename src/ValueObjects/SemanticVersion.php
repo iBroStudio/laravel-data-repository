@@ -80,7 +80,17 @@ class SemanticVersion extends ValueObject
     public function increment(SemanticVersionSegments $segment): static
     {
         $incremented = clone $this;
-        $incremented->{$segment->value} = $incremented->{$segment->value} + 1;
+
+        if ($segment === SemanticVersionSegments::PATCH) {
+            $incremented->patch++;
+        } elseif ($segment === SemanticVersionSegments::MINOR) {
+            $incremented->minor++;
+            $incremented->patch = 0;
+        } elseif ($segment === SemanticVersionSegments::MAJOR) {
+            $incremented->major++;
+            $incremented->minor = 0;
+            $incremented->patch = 0;
+        }
 
         return $incremented;
     }
