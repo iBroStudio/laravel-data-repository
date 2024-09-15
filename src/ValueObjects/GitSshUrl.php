@@ -3,7 +3,6 @@
 namespace IBroStudio\DataRepository\ValueObjects;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Stringable;
 use Illuminate\Validation\ValidationException;
 use MichaelRubel\ValueObjects\Collection\Primitive\Text;
@@ -56,30 +55,25 @@ class GitSshUrl extends Text
     }
 
     /**
-     * Validate the email.
+     * Validate the url.
      */
     protected function validate(): void
     {
-        $validator = Validator::make(
-            ['url' => $this->split],
-            ['url' => $this->validationRules()],
-        );
+        if ($this->value() === '') {
+            throw ValidationException::withMessages(['Url cannot be empty.']);
+        }
 
-        if ($validator->fails()) {
+        if (
+            ! Arr::exists($this->split, 'provider') || $this->split['provider'] === ''
+            || ! Arr::exists($this->split, 'username') || $this->split['username'] === ''
+            || ! Arr::exists($this->split, 'repository') || $this->split['repository'] === ''
+        ) {
             throw ValidationException::withMessages(['Your url is invalid.']);
         }
     }
 
     /**
-     * Define the rules for email validator.
-     */
-    protected function validationRules(): array
-    {
-        return ['required', 'array:provider,username,repository'];
-    }
-
-    /**
-     * Split the value by at symbol.
+     * Split the value.
      */
     protected function split(): void
     {
