@@ -74,6 +74,8 @@ class SemanticVersion extends ValueObject
         )
             ->when($this->withPrefix, function (Stringable $string) {
                 return $string->prepend($this->prefix);
+            }, function () {
+                $this->withPrefix = true; // reset the property
             });
     }
 
