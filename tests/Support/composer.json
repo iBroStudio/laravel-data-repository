@@ -1,0 +1,14 @@
+{
+    "name": "vendor_name/Support",
+    "description": "description",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "yann",
+            "email": "email@example.com"
+        }
+    ],
+    "require": [],
+    "version": "2.86.80"
+}
