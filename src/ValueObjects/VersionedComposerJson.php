@@ -53,6 +53,16 @@ class VersionedComposerJson extends ValueObject
         return SemanticVersion::make($this->content['version']);
     }
 
+    public function scripts(): ?array
+    {
+        return Arr::exists($this->content, 'scripts') ? $this->content['scripts'] : null;
+    }
+
+    public function script(string $key): ?string
+    {
+        return $this->scripts()[$key] ?? null;
+    }
+
     protected function validate(): void
     {
         if ($this->value() === '') {

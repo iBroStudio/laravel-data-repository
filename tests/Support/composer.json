@@ -9,6 +9,13 @@
             "email": "email@example.com"
         }
     ],
-    "require": [],
-    "version": "2.86.80"
+    "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "analyse": "vendor/bin/phpstan analyse -l 5 --memory-limit=1G database src tests",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint",
+        "full-check": "composer format && composer test && composer analyse"
+    },
+    "version": "5.16.1"
 }

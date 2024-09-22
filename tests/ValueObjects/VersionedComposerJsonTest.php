@@ -30,3 +30,20 @@ it('can update composer.json version', function () {
         VersionedComposerJson::make(__DIR__.'/../Support/composer.json')->version($version)
     )->toEqual($version);
 });
+
+it('can retrieve the scripts section', function () {
+
+    expect(
+        VersionedComposerJson::make(__DIR__.'/../Support/composer.json')->scripts()
+    )->toBeArray();
+});
+
+it('can retrieve a script line', function () {
+
+    expect(
+        VersionedComposerJson::make(__DIR__.'/../Support/composer.json')->script('test')
+    )->toEqual('vendor/bin/pest')
+        ->and(
+            VersionedComposerJson::make(__DIR__.'/../Support/composer.json')->script('does_not_exist')
+        )->toBeNull();
+});
