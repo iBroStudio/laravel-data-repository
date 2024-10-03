@@ -17,7 +17,7 @@
             "role": "Developer"
         }
     ],
-    "version": "1.4.0",
+    "version": "1.5.0",
     "require": {
         "php": "^8.2",
         "gabrielelana/byte-units": "^0.5.0",
