@@ -5,9 +5,9 @@ use IBroStudio\DataRepository\ValueObjects\ByteUnit;
 use Illuminate\Validation\ValidationException;
 
 it('can instantiate', function () {
-    $value = ByteUnit::make('1.42MB');
-
-    expect($value)->toBeInstanceOf(ByteUnit::class);
+    expect(
+        ByteUnit::make('1.42MB')
+    )->toBeInstanceOf(ByteUnit::class);
 });
 
 it('throws error on validation', function () {
@@ -19,9 +19,9 @@ it('throws error if unit is missing', function () {
 })->throws(TypeError::class);
 
 it('can give a well formated output', function () {
-    $value = ByteUnit::make('1.42MB');
-
-    expect($value->value())->toEqual('1.42MB');
+    expect(
+        ByteUnit::make('1.42MB')
+    )->toEqual('1.42MB');
 });
 
 it('can convert unit', function () {
