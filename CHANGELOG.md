@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.6.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.5.0...HEAD) (2024-10-03)
+### Features
+* add ip address object ([8cb0c2](https://github.com/iBroStudio/laravel-data-repository/commit/8cb0c2b214a4f092fe7865c7788775e91ee79c72))
+
+---
+
 ## [1.5.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.4.0...HEAD) (2024-10-03)
 ### Features
 * add ByteUnit object ([087d23](https://github.com/iBroStudio/laravel-data-repository/commit/087d23e1cc80898b9dbc9c317053dc6af0bfdb3e))
