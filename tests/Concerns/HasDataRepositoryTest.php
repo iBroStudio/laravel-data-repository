@@ -29,6 +29,30 @@ it('can save data object', function () {
         ->and($dataFromRepository->values()->toArray())->toMatchArray($data->toArray());
 });
 
+it('cascade delete data object', function () {
+    $referable = Referable::factory()->create();
+    $data = new ReferableData(
+        name: fake()->name(),
+        password: ValueObjects\EncryptableText::make(fake()->password()),
+        authentication: ValueObjects\Authentication\SshAuthentication::make(
+            username: fake()->userName(),
+            privateKey: ValueObjects\EncryptableText::make(fake()->macAddress()),
+            passphrase: ValueObjects\EncryptableText::make(fake()->password()),
+        )
+    );
+
+    $referable->data_repository()->add($data);
+
+    $referable->delete();
+
+    assertDatabaseMissing(DataObject::class, [
+        'referable_id' => $referable->id,
+        'referable_type' => Referable::class,
+        'class' => ReferableData::class,
+        'values' => json_encode($data),
+    ]);
+});
+
 it('can save simple value object', function (ValueObject $data) {
     $referable = Referable::factory()->create();
     $referable->data_repository()->add($data);

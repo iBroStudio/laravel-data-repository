@@ -49,13 +49,7 @@ trait HasDataRepository
         });
 
         static::deleted(function ($model) {
-            Arr::map($model->getCasts(), function (string $value, string $attribute) use ($model) {
-                if ($value === DataObjectCast::class) {
-                    $model->data_repository()
-                        ->whereId($model->getRawOriginal($attribute))
-                        ->delete();
-                }
-            });
+            $model->data_repository()->delete();
         });
     }
 
