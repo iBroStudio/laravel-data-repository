@@ -2,15 +2,61 @@
 
 namespace IBroStudio\DataRepository\Concerns;
 
+use IBroStudio\DataRepository\Casts\DataObjectCast;
 use IBroStudio\DataRepository\Models\DataObject;
 use IBroStudio\DataRepository\Relations\MorphManyDataObjects;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 
 trait HasDataRepository
 {
     public function initializeHasDataRepository(): void
     {
         $this->with[] = 'data_repository';
+    }
+
+    public static function bootHasDataRepository()
+    {
+        static::creating(function ($model) {
+            Arr::map($model->getCasts(), function (string $value, string $attribute) use ($model) {
+                if ($value === DataObjectCast::class) {
+                    if (! is_null($model->{$attribute})) {
+                        Cache::put($attribute, $model->{$attribute});
+                        $model->{$attribute} = null;
+                    }
+                }
+            });
+        });
+
+        static::created(function ($model) {
+            Arr::map($model->getCasts(), function (string $value, string $attribute) use ($model) {
+                if (Cache::has($attribute)) {
+                    $model->{$attribute} = $model->data_repository()->add(Cache::pull($attribute))->id;
+                    $model->save();
+                }
+            });
+        });
+
+        static::updating(function ($model) {
+            Arr::map($model->getCasts(), function (string $value, string $attribute) use ($model) {
+                if ($value === DataObjectCast::class) {
+                    if (! is_null($model->{$attribute})) {
+                        $model->{$attribute} = $model->data_repository()->add($model->{$attribute})->id;
+                    }
+                }
+            });
+        });
+
+        static::deleted(function ($model) {
+            Arr::map($model->getCasts(), function (string $value, string $attribute) use ($model) {
+                if ($value === DataObjectCast::class) {
+                    $model->data_repository()
+                        ->whereId($model->getRawOriginal($attribute))
+                        ->delete();
+                }
+            });
+        });
     }
 
     public function data_repository(?string $dataClass = null, ?array $valuesQuery = null): MorphManyDataObjects

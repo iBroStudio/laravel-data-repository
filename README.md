@@ -165,6 +165,68 @@ $model->data_repository(
 );
 ```
 
+## Eloquent attribute casting
+
+You can get direct access to an object value like `$model->song` instead of `$model->data_repository(dataClass: SongData::class)`.
+
+Add a `unsignedBigInteger` column to your model:
+```php
+$table->unsignedBigInteger('dto_attribute')->nullable();
+```
+
+And then add the cast to the model class:
+```php
+use IBroStudio\DataRepository\Casts\DataObjectCast;
+
+class YourEloquentModel extends Model
+{
+    protected function casts(): array
+    {
+        return [
+            'song' => DataObjectCast::class,
+        ];
+    }
+}
+```
+
+Usage:
+```php
+use IBroStudio\DataRepository\Casts\DataObjectCast;
+
+class YourEloquentModel extends Model
+{
+    protected function casts(): array
+    {
+        return [
+            'song' => DataObjectCast::class,
+        ];
+    }
+}
+
+$model = YourEloquentModel::create([
+    'song' => new SongData(
+        title: 'Walk', 
+        artist: 'Pantera'
+    ),
+]);
+// or
+$model->song = new SongData(
+    title: 'Walk', 
+    artist: 'Pantera'
+);
+
+$model->save();
+```
+
+## Built-in Objects Values
+- ByteUnit
+- EncryptableText
+- GitSshUrl
+- HashedPassword
+- IpAddress
+- SemanticVersion
+- Timecode
+- VersionedComposerJson
 
 ## Testing
 

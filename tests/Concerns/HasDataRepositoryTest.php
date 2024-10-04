@@ -6,6 +6,9 @@ use IBroStudio\DataRepository\Tests\Support\Models\Referable;
 use IBroStudio\DataRepository\ValueObjects;
 use MichaelRubel\ValueObjects\ValueObject;
 
+use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\assertDatabaseMissing;
+
 it('can save data object', function () {
     $referable = Referable::factory()->create();
     $data = new ReferableData(
@@ -180,4 +183,96 @@ it('can save data with values constraints', function () {
                 ->values()
                 ->toArray()
         )->toMatchArray($data2->toArray());
+});
+
+it('allows model to have dto attribute', function () {
+    $data = new ReferableData(
+        name: fake()->name(),
+        password: ValueObjects\EncryptableText::make(fake()->password()),
+        authentication: ValueObjects\Authentication\SshAuthentication::make(
+            username: fake()->userName(),
+            privateKey: ValueObjects\EncryptableText::make(fake()->macAddress()),
+            passphrase: ValueObjects\EncryptableText::make(fake()->password()),
+        )
+    );
+
+    $referable = Referable::create([
+        'dto_attribute' => $data,
+    ]);
+
+    $referable->save();
+
+    expect($referable->dto_attribute->toArray())->toMatchArray($data->toArray());
+
+    assertDatabaseHas(DataObject::class, [
+        'referable_id' => $referable->id,
+        'referable_type' => Referable::class,
+        'class' => ReferableData::class,
+        'values' => json_encode($data),
+    ]);
+
+    $referable = Referable::factory()->create();
+    $data = new ReferableData(
+        name: fake()->name(),
+        password: ValueObjects\EncryptableText::make(fake()->password()),
+        authentication: ValueObjects\Authentication\SshAuthentication::make(
+            username: fake()->userName(),
+            privateKey: ValueObjects\EncryptableText::make(fake()->macAddress()),
+            passphrase: ValueObjects\EncryptableText::make(fake()->password()),
+        )
+    );
+    $referable->dto_attribute = $data;
+
+    $referable->save();
+
+    expect($referable->dto_attribute->toArray())->toMatchArray($data->toArray());
+
+    assertDatabaseHas(DataObject::class, [
+        'referable_id' => $referable->id,
+        'referable_type' => Referable::class,
+        'class' => ReferableData::class,
+        'values' => json_encode($data),
+    ]);
+
+    $referable = Referable::factory()->create();
+    $data = ValueObjects\Email::make(fake()->email());
+
+    $referable->dto_attribute = $data;
+
+    $referable->save();
+
+    expect($referable->dto_attribute->toArray())->toMatchArray($data->toArray());
+
+    assertDatabaseHas(DataObject::class, [
+        'referable_id' => $referable->id,
+        'referable_type' => Referable::class,
+        'class' => ValueObjects\Email::class,
+        'values' => json_encode($data->toArray()),
+    ]);
+
+});
+
+it('can delete dto attribute', function () {
+    $referable = Referable::factory()->create();
+    $data = new ReferableData(
+        name: fake()->name(),
+        password: ValueObjects\EncryptableText::make(fake()->password()),
+        authentication: ValueObjects\Authentication\SshAuthentication::make(
+            username: fake()->userName(),
+            privateKey: ValueObjects\EncryptableText::make(fake()->macAddress()),
+            passphrase: ValueObjects\EncryptableText::make(fake()->password()),
+        )
+    );
+    $referable->dto_attribute = $data;
+
+    $referable->save();
+
+    $referable->delete();
+
+    assertDatabaseMissing(DataObject::class, [
+        'referable_id' => $referable->id,
+        'referable_type' => Referable::class,
+        'class' => ReferableData::class,
+        'values' => json_encode($data),
+    ]);
 });
