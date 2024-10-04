@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.8.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.7.0...HEAD) (2024-10-04)
+### Features
+* add cascade delete on data repository ([3659aa](https://github.com/iBroStudio/laravel-data-repository/commit/3659aaff830ea824fca1cdc0dd9c7a68f16eeb1a))
+* add DataObjectCast ([ef9390](https://github.com/iBroStudio/laravel-data-repository/commit/ef9390eb2358cf157fba72b135fa87c1e026d522))
+
+---
+
 ## [1.7.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.6.0...HEAD) (2024-10-03)
 ### Features
 * add DataObjectTransformer ([4425a2](https://github.com/iBroStudio/laravel-data-repository/commit/4425a237394b075229f3848eb23635ec76de2d4b))
