@@ -1,22 +1,31 @@
 <?php
 
+use ByteUnits\Metric;
 use IBroStudio\DataRepository\Enums\ByteUnitEnum;
-use IBroStudio\DataRepository\ValueObjects\ByteUnit;
+use IBroStudio\DataRepository\ValueObjects\Units\Byte\ByteUnit;
 use Illuminate\Validation\ValidationException;
 
-it('can instantiate', function () {
+it('can instantiate from string', function () {
     expect(
         ByteUnit::make('1.42MB')
+    )->toBeInstanceOf(ByteUnit::class);
+});
+
+it('can instantiate from ByteUnits', function () {
+    expect(
+        ByteUnit::make(Metric::gigabytes(12))
+    )->toBeInstanceOf(ByteUnit::class);
+});
+
+it('can instantiate from number', function () {
+    expect(
+        ByteUnit::make(12.5)
     )->toBeInstanceOf(ByteUnit::class);
 });
 
 it('throws error on validation', function () {
     ByteUnit::make('aaa');
 })->throws(ValidationException::class);
-
-it('throws error if unit is missing', function () {
-    ByteUnit::make(120);
-})->throws(TypeError::class);
 
 it('can give a well formated output', function () {
     expect(
@@ -60,4 +69,8 @@ it('can give the number of bytes', function () {
         ByteUnit::make('1.42MB')
             ->bytes()
     )->toEqual(1420000);
+});
+
+it('can retrieve unit alone', function () {
+    expect(ByteUnit::unit())->toEqual('B');
 });

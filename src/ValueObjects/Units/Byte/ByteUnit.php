@@ -1,27 +1,33 @@
 <?php
 
-namespace IBroStudio\DataRepository\ValueObjects;
+namespace IBroStudio\DataRepository\ValueObjects\Units\Byte;
 
 use ByteUnits;
+use IBroStudio\DataRepository\Contracts\UnitValueContract;
 use IBroStudio\DataRepository\Enums\ByteUnitEnum;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 use MichaelRubel\ValueObjects\ValueObject;
 
-class ByteUnit extends ValueObject
+class ByteUnit extends ValueObject implements UnitValueContract
 {
     protected ByteUnits\System $value;
 
-    public function __construct(string $value)
+    final public function __construct(int|string|float|ByteUnits\System $value)
     {
         if (isset($this->value)) {
             throw new InvalidArgumentException(static::IMMUTABLE_MESSAGE);
         }
 
-        try {
-            $this->value = ByteUnits\parse($value);
-        } catch (ByteUnits\ParseException $e) {
-            throw ValidationException::withMessages([$e->getMessage()]);
+        if ($value instanceof ByteUnits\System) {
+            $this->value = $value;
+        } else {
+            try {
+                $this->value = ByteUnits\parse($value);
+            } catch (ByteUnits\ParseException $e) {
+                throw ValidationException::withMessages([$e->getMessage()]);
+            }
         }
     }
 
@@ -32,7 +38,15 @@ class ByteUnit extends ValueObject
 
     public function value(?ByteUnitEnum $unit = null): string
     {
-        return $this->value->format($unit?->name);
+        $formated = $this->value->format($unit?->name);
+        $unit = Str::substr($formated, -2);
+
+        return Str::of($formated)
+            ->chopEnd($unit)
+            ->rtrim('0')
+            ->chopEnd('.')
+            ->append($unit)
+            ->toString();
     }
 
     public function bytes(): int|string
@@ -73,5 +87,10 @@ class ByteUnit extends ValueObject
         return $this->value->isGreaterThan(
             $compare instanceof ByteUnit ? $compare->parsed() : ByteUnits\parse($compare)
         );
+    }
+
+    public static function unit(): ?string
+    {
+        return 'B';
     }
 }
