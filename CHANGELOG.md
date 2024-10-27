@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.9.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.8.0...HEAD) (2024-10-27)
+### Features
+* add Periods and Units objects values ([7ed282](https://github.com/iBroStudio/laravel-data-repository/commit/7ed282d89c76cfa676a95a64d6ab9614dd51f454))
+
+---
+
 ## [1.8.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.7.0...HEAD) (2024-10-04)
 ### Features
 * add cascade delete on data repository ([3659aa](https://github.com/iBroStudio/laravel-data-repository/commit/3659aaff830ea824fca1cdc0dd9c7a68f16eeb1a))
