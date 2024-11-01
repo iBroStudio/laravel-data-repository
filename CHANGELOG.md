@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.10.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.9.0...HEAD) (2024-11-01)
+### Features
+* add company name object ([74607e](https://github.com/iBroStudio/laravel-data-repository/commit/74607e6d590fb484b2287f0864c253dcb7092b29))
+
+---
+
 ## [1.9.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.8.0...HEAD) (2024-10-27)
 ### Features
 * add Periods and Units objects values ([7ed282](https://github.com/iBroStudio/laravel-data-repository/commit/7ed282d89c76cfa676a95a64d6ab9614dd51f454))
