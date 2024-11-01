@@ -17,7 +17,7 @@
             "role": "Developer"
         }
     ],
-    "version": "1.9.0",
+    "version": "1.10.0",
     "require": {
         "php": "^8.2",
         "darsyn/ip": "^5.0",
