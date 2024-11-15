@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.11.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.10.0...HEAD) (2024-11-15)
+### Features
+* add FirstName and lastName objects ([7e8756](https://github.com/iBroStudio/laravel-data-repository/commit/7e8756df838d77530788ae50248813d8920781f5))
+
+---
+
 ## [1.10.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.9.0...HEAD) (2024-11-01)
 ### Features
 * add company name object ([74607e](https://github.com/iBroStudio/laravel-data-repository/commit/74607e6d590fb484b2287f0864c253dcb7092b29))
