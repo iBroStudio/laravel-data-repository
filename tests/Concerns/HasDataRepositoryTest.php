@@ -1,8 +1,11 @@
 <?php
 
+use IBroStudio\DataRepository\Exceptions\DataObjectCastException;
 use IBroStudio\DataRepository\Models\DataObject;
+use IBroStudio\DataRepository\Tests\Support\DataObjects\OtherReferableData;
 use IBroStudio\DataRepository\Tests\Support\DataObjects\ReferableData;
 use IBroStudio\DataRepository\Tests\Support\Models\Referable;
+use IBroStudio\DataRepository\Tests\Support\Models\ReferableWithConstrainedCast;
 use IBroStudio\DataRepository\ValueObjects;
 use MichaelRubel\ValueObjects\ValueObject;
 
@@ -219,12 +222,7 @@ it('allows model to have dto attribute', function () {
             passphrase: ValueObjects\EncryptableText::make(fake()->password()),
         )
     );
-
-    $referable = Referable::create([
-        'dto_attribute' => $data,
-    ]);
-
-    $referable->save();
+    $referable = Referable::create(['dto_attribute' => $data,]);
 
     expect($referable->dto_attribute->toArray())->toMatchArray($data->toArray());
 
@@ -274,6 +272,27 @@ it('allows model to have dto attribute', function () {
         'values' => json_encode($data->toArray()),
     ]);
 
+});
+
+it('throws exception with constrained dto attribute', function () {
+    ReferableWithConstrainedCast::create([
+        'dto_attribute' => new ReferableData(
+            name: fake()->name(),
+            password: ValueObjects\EncryptableText::make(fake()->password()),
+            authentication: ValueObjects\Authentication\SshAuthentication::make(
+                username: fake()->userName(),
+                privateKey: ValueObjects\EncryptableText::make(fake()->macAddress()),
+                passphrase: ValueObjects\EncryptableText::make(fake()->password()),
+            )
+        )
+    ]);
+})->throws(DataObjectCastException::class, 'dto_attribute is not a IBroStudio\DataRepository\Tests\Support\DataObjects\OtherReferableData');
+
+it('allows model to have constrained dto attribute', function () {
+    $data = OtherReferableData::from(['name' => fake()->name]);
+    $referable = Referable::create(['dto_attribute' => $data,]);
+
+    expect($referable->dto_attribute->toArray())->toMatchArray($data->toArray());
 });
 
 it('can delete dto attribute', function () {

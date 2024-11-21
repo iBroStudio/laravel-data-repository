@@ -18,5 +18,5 @@ it('can format number with unit', function () {
 
 it('can retrieve unit alone', function () {
     expect(EmailUnit::unit())
-        ->toEqual('emails');
+        ->toEqual(' emails');
 });

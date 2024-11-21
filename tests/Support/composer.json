@@ -17,5 +17,5 @@
         "format": "vendor/bin/pint",
         "full-check": "composer format && composer test && composer analyse"
     },
-    "version": "0.7.10"
+    "version": "8.96.7"
 }

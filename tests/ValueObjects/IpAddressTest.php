@@ -9,7 +9,7 @@ it('can instantiate', function () {
 });
 
 it('throws error on validation', function () {
-    IpAddress::make(fake()->word);
+    IpAddress::make('116.112');
 })->throws(ValidationException::class);
 
 it('can give a well formated output', function () {

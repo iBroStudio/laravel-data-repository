@@ -8,6 +8,7 @@ use IBroStudio\DataRepository\Relations\MorphManyDataObjects;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 trait HasDataRepository
 {
@@ -20,7 +21,7 @@ trait HasDataRepository
     {
         static::creating(function ($model) {
             Arr::map($model->getCasts(), function (string $value, string $attribute) use ($model) {
-                if ($value === DataObjectCast::class) {
+                if (Str::startsWith($value, DataObjectCast::class)) {
                     if (! is_null($model->{$attribute})) {
                         Cache::put($attribute, $model->{$attribute});
                         $model->{$attribute} = null;
@@ -40,7 +41,7 @@ trait HasDataRepository
 
         static::updating(function ($model) {
             Arr::map($model->getCasts(), function (string $value, string $attribute) use ($model) {
-                if ($value === DataObjectCast::class) {
+                if (Str::startsWith($value, DataObjectCast::class)) {
                     if (! is_null($model->{$attribute})) {
                         $model->{$attribute} = $model->data_repository()->add($model->{$attribute})->id;
                     }

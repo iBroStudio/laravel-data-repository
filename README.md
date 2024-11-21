@@ -171,7 +171,7 @@ You can get direct access to an object value like `$model->song` instead of `$mo
 
 Add a `unsignedBigInteger` column to your model:
 ```php
-$table->unsignedBigInteger('dto_attribute')->nullable();
+$table->unsignedBigInteger('song')->nullable();
 ```
 
 And then add the cast to the model class:
@@ -218,6 +218,31 @@ $model->song = new SongData(
 $model->save();
 ```
 
+You can constrain the property to a defined data class by adding it to the cast:
+```php
+use IBroStudio\DataRepository\Casts\DataObjectCast;
+
+class YourEloquentModel extends Model
+{
+    protected function casts(): array
+    {
+        return [
+            'song' => DataObjectCast::class.':'.SongData::class,
+        ];
+    }
+}
+```
+This adds data validation and automatic instantiation of the data class, allowing you to simply pass an array to the property setter:
+```php
+$model = YourEloquentModel::create([
+    'song' => [
+        'title' => 'Walk', 
+        'artist' => 'Pantera'
+    ]
+]);
+```
+
+
 ## Built-in Objects Values
 - ByteUnit
 - EncryptableText
@@ -227,6 +252,10 @@ $model->save();
 - SemanticVersion
 - Timecode
 - VersionedComposerJson
+- Name, FirstName, LastName, Fullname, CompanyName
+- Email
+- Phone
+- TaxNumber
 
 ## Testing
 
