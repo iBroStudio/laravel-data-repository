@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.12.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.11.0...HEAD) (2024-11-21)
+### Features
+* improve data object cast ([ca2953](https://github.com/iBroStudio/laravel-data-repository/commit/ca295394f206ef5362016a5b7151b6b90e70af79))
+### Bug Fixes
+* code format ([96671d](https://github.com/iBroStudio/laravel-data-repository/commit/96671d97505e6bcf8a012208b11004ddec43f517))
+
+---
+
 ## [1.11.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.10.0...HEAD) (2024-11-15)
 ### Features
 * add FirstName and lastName objects ([7e8756](https://github.com/iBroStudio/laravel-data-repository/commit/7e8756df838d77530788ae50248813d8920781f5))
