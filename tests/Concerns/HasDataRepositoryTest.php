@@ -222,7 +222,7 @@ it('allows model to have dto attribute', function () {
             passphrase: ValueObjects\EncryptableText::make(fake()->password()),
         )
     );
-    $referable = Referable::create(['dto_attribute' => $data,]);
+    $referable = Referable::create(['dto_attribute' => $data]);
 
     expect($referable->dto_attribute->toArray())->toMatchArray($data->toArray());
 
@@ -284,13 +284,13 @@ it('throws exception with constrained dto attribute', function () {
                 privateKey: ValueObjects\EncryptableText::make(fake()->macAddress()),
                 passphrase: ValueObjects\EncryptableText::make(fake()->password()),
             )
-        )
+        ),
     ]);
 })->throws(DataObjectCastException::class, 'dto_attribute is not a IBroStudio\DataRepository\Tests\Support\DataObjects\OtherReferableData');
 
 it('allows model to have constrained dto attribute', function () {
     $data = OtherReferableData::from(['name' => fake()->name]);
-    $referable = Referable::create(['dto_attribute' => $data,]);
+    $referable = Referable::create(['dto_attribute' => $data]);
 
     expect($referable->dto_attribute->toArray())->toMatchArray($data->toArray());
 });

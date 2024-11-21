@@ -5,7 +5,7 @@ namespace IBroStudio\DataRepository\ValueObjects;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 
-class Name extends \MichaelRubel\ValueObjects\Collection\Complex\Name 
+class Name extends \MichaelRubel\ValueObjects\Collection\Complex\Name
 {
     protected string|Stringable $value;
 

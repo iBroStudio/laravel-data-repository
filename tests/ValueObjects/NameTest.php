@@ -12,4 +12,3 @@ it('formats name', function () {
         Name::make('yanN')->value()
     )->toEqual('Yann');
 });
-

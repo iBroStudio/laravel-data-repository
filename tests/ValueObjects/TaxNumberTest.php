@@ -18,4 +18,3 @@ it('can give tax number name without prefix', function () {
         TaxNumber::make('FR54879706885')->taxNumber()
     )->toEqual('54879706885');
 });
-

@@ -12,4 +12,3 @@ it('formats name', function () {
         CompanyName::make('iBroStudio')->value()
     )->toEqual('IBROSTUDIO');
 });
-

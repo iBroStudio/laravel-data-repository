@@ -21,4 +21,3 @@ it('formats bad typed name', function () {
         FirstName::make('yANN')->value()
     )->toEqual(Str::ucfirst('Yann'));
 });
-

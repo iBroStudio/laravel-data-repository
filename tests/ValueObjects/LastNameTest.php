@@ -15,4 +15,3 @@ it('formats name', function () {
         LastName::make($name)->value()
     )->toEqual(Str::upper($name));
 });
-
