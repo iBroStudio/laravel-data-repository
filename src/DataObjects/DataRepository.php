@@ -2,6 +2,7 @@
 
 namespace IBroStudio\DataRepository\DataObjects;
 
+use IBroStudio\DataRepository\Concerns\ConvertiblesDataProperties;
 use IBroStudio\DataRepository\Contracts\Authentication;
 use Illuminate\Support\Collection;
 use MichaelRubel\ValueObjects\ValueObject;
@@ -9,6 +10,8 @@ use Spatie\LaravelData\Data;
 
 abstract class DataRepository extends Data
 {
+    use ConvertiblesDataProperties;
+
     public function convertValueObjects(): Collection
     {
         $class = new \ReflectionClass(static::class);

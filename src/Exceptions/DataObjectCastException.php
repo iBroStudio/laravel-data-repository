@@ -3,7 +3,6 @@
 namespace IBroStudio\DataRepository\Exceptions;
 
 use Exception;
-use Throwable;
 
 class DataObjectCastException extends Exception
 {

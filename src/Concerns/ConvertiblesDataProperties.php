@@ -6,9 +6,10 @@ use IBroStudio\DataRepository\Conversion\DataPropertiesConverter;
 
 trait ConvertiblesDataProperties
 {
-    public static function fromConverters(array $data): self
+    public static function fromConverters(array $data): static
     {
-        return new self(
+        // @phpstan-ignore-next-line
+        return new static(
             ...(new DataPropertiesConverter(self::class))->convert($data)
         );
     }

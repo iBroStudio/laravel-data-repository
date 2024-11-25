@@ -17,6 +17,10 @@ class EnumConverter extends BaseConverter
 
     public function convert(ReflectionClass $reflection, ReflectionProperty $property, mixed $data): mixed
     {
+        if (is_object($data) && enum_exists(get_class($data))) {
+            return $data;
+        }
+
         try {
             return (new ReflectionMethod($reflection->getname(), 'tryFrom'))
                 ->invoke(null, $data)
