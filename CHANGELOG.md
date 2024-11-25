@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.13.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.12.0...HEAD) (2024-11-25)
+### Bug Fixes
+* use fromConverters in DataObjectCast setter ([06b75d](https://github.com/iBroStudio/laravel-data-repository/commit/06b75d8164094d2f94d36df265013760b6e623be))
+
+---
+
 ## [1.12.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.11.0...HEAD) (2024-11-21)
 ### Features
 * improve data object cast ([ca2953](https://github.com/iBroStudio/laravel-data-repository/commit/ca295394f206ef5362016a5b7151b6b90e70af79))
