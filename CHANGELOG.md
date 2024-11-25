@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.13.1](https://github.com/iBroStudio/laravel-data-repository/compare/v1.13.0...HEAD) (2024-11-25)
+### Bug Fixes
+* improve enum converter ([433242](https://github.com/iBroStudio/laravel-data-repository/commit/433242a3e63db22dfd1b9839547d338bbb7f0dab))
+
+---
+
 ## [1.13.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.12.0...HEAD) (2024-11-25)
 ### Bug Fixes
 * use fromConverters in DataObjectCast setter ([06b75d](https://github.com/iBroStudio/laravel-data-repository/commit/06b75d8164094d2f94d36df265013760b6e623be))
