@@ -36,7 +36,7 @@ class DataObjectCast implements CastsAttributes
         ) {
 
             if (is_array($value)) {
-                return $this->dataClass::from($value);
+                return $this->dataClass::fromConverters($value);
             }
 
             if (! is_a($value, $this->dataClass)) {
