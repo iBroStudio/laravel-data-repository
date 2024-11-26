@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.14.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.13.1...HEAD) (2024-11-26)
+### Features
+* improve Currencies enum ([fa943a](https://github.com/iBroStudio/laravel-data-repository/commit/fa943af474ccc4a36e1a41694f0f4ab2cad21c26))
+
+---
+
 ## [1.13.1](https://github.com/iBroStudio/laravel-data-repository/compare/v1.13.0...HEAD) (2024-11-25)
 ### Bug Fixes
 * improve enum converter ([433242](https://github.com/iBroStudio/laravel-data-repository/commit/433242a3e63db22dfd1b9839547d338bbb7f0dab))
