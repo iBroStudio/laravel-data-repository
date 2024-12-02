@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.16.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.15.0...HEAD) (2024-12-02)
+### Features
+* add ValueObjectCast for eloquent properties ([f6c4c1](https://github.com/iBroStudio/laravel-data-repository/commit/f6c4c1e53034acdae62f8da00a8f13a0d83e4f14))
+
+---
+
 ## [1.15.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.14.0...HEAD) (2024-12-02)
 ### Features
 * improve url object value with Spatie url package ([e025a6](https://github.com/iBroStudio/laravel-data-repository/commit/e025a68d7165d0f1e6834abdd92902d39dd38ebf))
