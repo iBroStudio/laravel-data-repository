@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.17.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.16.0...HEAD) (2024-12-02)
+### Features
+* add TimeDuration object value ([f1c553](https://github.com/iBroStudio/laravel-data-repository/commit/f1c5535636cdba88de37b5e50949e2b87f39b8f6))
+
+---
+
 ## [1.16.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.15.0...HEAD) (2024-12-02)
 ### Features
 * add ValueObjectCast for eloquent properties ([f6c4c1](https://github.com/iBroStudio/laravel-data-repository/commit/f6c4c1e53034acdae62f8da00a8f13a0d83e4f14))
