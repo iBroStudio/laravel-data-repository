@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.18.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.17.0...HEAD) (2024-12-02)
+### Features
+* add Domain object value ([2fcf78](https://github.com/iBroStudio/laravel-data-repository/commit/2fcf7860e9aab99ee82ea1a04809fc2b2cd17e93))
+
+---
+
 ## [1.17.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.16.0...HEAD) (2024-12-02)
 ### Features
 * add TimeDuration object value ([f1c553](https://github.com/iBroStudio/laravel-data-repository/commit/f1c5535636cdba88de37b5e50949e2b87f39b8f6))
