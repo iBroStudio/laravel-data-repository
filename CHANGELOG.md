@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.15.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.14.0...HEAD) (2024-12-02)
+### Features
+* improve url object value with Spatie url package ([e025a6](https://github.com/iBroStudio/laravel-data-repository/commit/e025a68d7165d0f1e6834abdd92902d39dd38ebf))
+
+---
+
 ## [1.14.0](https://github.com/iBroStudio/laravel-data-repository/compare/v1.13.1...HEAD) (2024-11-26)
 ### Features
 * improve Currencies enum ([fa943a](https://github.com/iBroStudio/laravel-data-repository/commit/fa943af474ccc4a36e1a41694f0f4ab2cad21c26))
