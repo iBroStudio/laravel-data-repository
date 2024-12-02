@@ -6,6 +6,7 @@ use IBroStudio\DataRepository\Casts\DataObjectCast;
 use IBroStudio\DataRepository\Casts\ValueObjectCast;
 use IBroStudio\DataRepository\Concerns\HasDataRepository;
 use IBroStudio\DataRepository\Tests\Support\Database\Factories\ReferableFactory;
+use IBroStudio\DataRepository\ValueObjects\TimeDuration;
 use IBroStudio\DataRepository\ValueObjects\Url;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +23,7 @@ class Referable extends Model
         return [
             'dto_attribute' => DataObjectCast::class,
             'object_value_property' => ValueObjectCast::class.':'.Url::class,
+            'time_duration' => ValueObjectCast::class.':'.TimeDuration::class,
         ];
     }
 

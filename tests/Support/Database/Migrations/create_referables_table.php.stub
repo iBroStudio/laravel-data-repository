@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('dto_attribute')->nullable();
             $table->string('object_value_property')->nullable();
+            $table->string('time_duration')->nullable();
             $table->timestamps();
         });
     }
