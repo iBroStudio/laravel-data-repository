@@ -2,6 +2,7 @@
 
 namespace IBroStudio\DataRepository\Tests;
 
+use Bakame\Laravel\Pdp;
 use IBroStudio\DataRepository\DataRepositoryServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use MichaelRubel\EnhancedContainer\LecServiceProvider;
@@ -26,6 +27,7 @@ class TestCase extends Orchestra
         return [
             DataRepositoryServiceProvider::class,
             LaravelDataServiceProvider::class,
+            Pdp\ServiceProvider::class,
             //LecServiceProvider::class,
             //ValueObjectServiceProvider::class,
         ];

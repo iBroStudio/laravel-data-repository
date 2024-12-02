@@ -12,26 +12,27 @@ class TimeDuration extends ValueObject
 {
     private CarbonInterval $duration;
 
-    public function __construct(float|string $value, protected TimeUnitEnum|string $unit = TimeUnitEnum::MINUTES)
+    public function __construct(float|string $value, protected TimeUnitEnum|string|null $unit = null)
     {
         if (isset($this->duration)) {
             throw new InvalidArgumentException(static::IMMUTABLE_MESSAGE);
         }
 
-        if (is_string($unit)) {
-            $unit = TimeUnitEnum::from($unit);
+        if (! $this->unit instanceof TimeUnitEnum) {
+            $this->unit = is_string($this->unit) ?
+                TimeUnitEnum::from($this->unit) : TimeUnitEnum::MINUTES;
         }
 
         if (Str::contains($value, ':')) {
             $this->fromString($value);
         } else {
-            $this->fromFloat($value, $unit);
+            $this->fromFloat($value);
         }
     }
 
-    private function fromFloat(float $value, TimeUnitEnum $unit): void
+    private function fromFloat(float $value): void
     {
-        $this->duration = (new CarbonInterval(null))->add($unit->value, $value);
+        $this->duration = (new CarbonInterval(null))->add($this->unit->value, $value);
     }
 
     private function fromString(string $value): void

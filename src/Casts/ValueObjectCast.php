@@ -10,15 +10,15 @@ class ValueObjectCast implements CastsAttributes
 {
     public function __construct(
         protected string $valueObjectClass,
+        protected ?string $params = null,
     ) {}
 
     public function get(Model $model, string $key, mixed $value, array $attributes): ValueObject
     {
-        return $this->valueObjectClass::make($value);
+        return $this->valueObjectClass::make($value, $this->params);
     }
 
-    // @phpstan-ignore-next-line
-    public function set(Model $model, string $key, mixed $value, array $attributes)
+    public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
         if ($value instanceof ValueObject) {
 
