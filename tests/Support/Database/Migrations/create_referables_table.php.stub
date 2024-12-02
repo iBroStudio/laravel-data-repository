@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('referables', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('dto_attribute')->nullable();
+            $table->string('object_value_property')->nullable();
             $table->timestamps();
         });
     }
