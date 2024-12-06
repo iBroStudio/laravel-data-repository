@@ -10,7 +10,7 @@ trait ConvertiblesDataProperties
     {
         // @phpstan-ignore-next-line
         return new static(
-            ...(new DataPropertiesConverter(self::class))->convert($data)
+            ...(new DataPropertiesConverter(static::class))->convert($data)
         );
     }
 }
