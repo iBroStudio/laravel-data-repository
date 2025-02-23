@@ -93,4 +93,9 @@ class ByteUnit extends ValueObject implements UnitValueContract
     {
         return 'B';
     }
+
+    public function toArray(): array
+    {
+        return (array) $this->bytes();
+    }
 }
