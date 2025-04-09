@@ -175,8 +175,9 @@ $table->unsignedBigInteger('song')->nullable();
 ```
 
 And then add the cast to the model class:
+
 ```php
-use IBroStudio\DataRepository\Casts\DataObjectCast;
+use IBroStudio\DataRepository\EloquentCasts\DataObjectCast;
 
 class YourEloquentModel extends Model
 {
@@ -190,8 +191,9 @@ class YourEloquentModel extends Model
 ```
 
 Usage:
+
 ```php
-use IBroStudio\DataRepository\Casts\DataObjectCast;
+use IBroStudio\DataRepository\EloquentCasts\DataObjectCast;
 
 class YourEloquentModel extends Model
 {
@@ -219,8 +221,9 @@ $model->save();
 ```
 
 You can constrain the property to a defined data class by adding it to the cast:
+
 ```php
-use IBroStudio\DataRepository\Casts\DataObjectCast;
+use IBroStudio\DataRepository\EloquentCasts\DataObjectCast;
 
 class YourEloquentModel extends Model
 {

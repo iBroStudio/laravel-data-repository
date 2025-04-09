@@ -3,35 +3,40 @@
 use IBroStudio\DataRepository\ValueObjects\GitSshUrl;
 use Illuminate\Validation\ValidationException;
 
-it('can instantiate', function () {
-    $url = GitSshUrl::make('git@github.com:iBroStudio/laravel-data-repository.git');
-
-    expect($url)->toBeInstanceOf(GitSshUrl::class);
+it('can instantiate GitSshUrl object value', function () {
+    expect(
+        GitSshUrl::from('git@github.com:iBroStudio/laravel-data-repository.git')
+    )->toBeInstanceOf(GitSshUrl::class);
 });
 
-it('validate value', function () {
-    GitSshUrl::make('https://github.com/iBroStudio/laravel-data-repository.git');
+it('can validate GitSshUrl object value', function () {
+    GitSshUrl::from('https://github.com/iBroStudio/laravel-data-repository.git');
 })->throws(ValidationException::class);
 
-it('can retrieve the value', function () {
+it('can return GitSshUrl object value', function () {
     $url = 'git@github.com:iBroStudio/laravel-data-repository.git';
-    $vo = GitSshUrl::make('git@github.com:iBroStudio/laravel-data-repository.git');
-    expect($vo->value())->toEqual($url);
+
+    expect(
+        GitSshUrl::from($url)->value
+    )->toEqual($url);
 });
 
-it('can retrieve split values', function () {
-    $url = GitSshUrl::make('git@github.com:iBroStudio/laravel-data-repository.git');
+it('can return GitSshUrl object value single property', function () {
+    $url = GitSshUrl::from('git@github.com:iBroStudio/laravel-data-repository.git');
 
-    expect($url->provider())->toEqual('github')
-        ->and($url->username())->toEqual('iBroStudio')
-        ->and($url->repository())->toEqual('laravel-data-repository');
+    expect($url->provider)->toEqual('github')
+        ->and($url->username)->toEqual('iBroStudio')
+        ->and($url->repository)->toEqual('laravel-data-repository');
 });
 
-it('can convert value items into array', function () {
-    $url = GitSshUrl::make('git@github.com:iBroStudio/laravel-data-repository.git');
+it('can return GitSshUrl object value properties', function () {
+    $url = 'git@github.com:iBroStudio/laravel-data-repository.git';
 
-    expect($url->toArray())->toMatchArray([
-        'url' => 'git@github.com:iBroStudio/laravel-data-repository.git',
+    expect(
+        GitSshUrl::from($url)
+            ->properties()
+    )->toMatchArray([
+        'value' => $url,
         'username' => 'iBroStudio',
         'repository' => 'laravel-data-repository',
         'provider' => 'github',

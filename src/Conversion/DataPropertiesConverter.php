@@ -47,7 +47,7 @@ class DataPropertiesConverter
 
     public function processThroughConverter(Converter $converter): self
     {
-        //dd($this->properties);
+        // dd($this->properties);
         $this->properties->each(function (ReflectionProperty $property, int $key) use ($converter) {
 
             $type = $property->getType();

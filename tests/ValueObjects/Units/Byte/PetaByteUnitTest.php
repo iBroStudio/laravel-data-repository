@@ -2,23 +2,23 @@
 
 use IBroStudio\DataRepository\ValueObjects\Units\Byte\PetaByteUnit;
 
-it('can instantiate', function () {
-    expect(PetaByteUnit::make(10))
+it('can instantiate PetaByteUnit', function () {
+    expect(PetaByteUnit::from(10))
         ->toBeInstanceOf(PetaByteUnit::class);
 });
 
-it('can format number with unit', function () {
+it('can return PetaByteUnit with unit', function () {
     expect(
-        PetaByteUnit::make(10.00)->value()
+        PetaByteUnit::from(10.00)->withUnit()
     )->toEqual('10PB')
         ->and(
-            PetaByteUnit::make(10.58)->value()
+            PetaByteUnit::from(10.58)->withUnit()
         )->toEqual('10.58PB')
         ->and(
-            PetaByteUnit::make(10.50)->value()
+            PetaByteUnit::from(10.50)->withUnit()
         )->toEqual('10.5PB');
 });
 
-it('can retrieve unit alone', function () {
+it('can return PetaByteUnit unit', function () {
     expect(PetaByteUnit::unit())->toEqual('PB');
 });

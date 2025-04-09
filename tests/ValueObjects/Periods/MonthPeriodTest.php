@@ -2,16 +2,16 @@
 
 use IBroStudio\DataRepository\ValueObjects\Periods\MonthPeriod;
 
-it('can instantiate', function () {
-    expect(MonthPeriod::make(10))
+it('can instantiate MonthPeriod object value', function () {
+    expect(MonthPeriod::from(10))
         ->toBeInstanceOf(MonthPeriod::class);
 });
 
-it('can format number with unit', function () {
+it('can return DayPeriod object value with unit', function () {
     expect(
-        MonthPeriod::make(1)->value()
+        MonthPeriod::from(1)->withUnit()
     )->toEqual('month')
         ->and(
-            MonthPeriod::make(10)->value()
+            MonthPeriod::from(10)->withUnit()
         )->toEqual('10 months');
 });

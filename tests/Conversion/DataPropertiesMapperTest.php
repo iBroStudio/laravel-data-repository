@@ -54,8 +54,8 @@ it('can map ValueObjects/Boolean property', function () {
         ]);
 });
 
-it('can map ValueObjects/Number property', function () {
-    [$mapper, $converter, $property, $reflection] = getInstances('number');
+it('can map ValueObjects/Integer property', function () {
+    [$mapper, $converter, $property, $reflection] = getInstances('integer');
     $map = $mapper->trough($converter)->mapProperty($property, $reflection);
     $map['converter'] = Str::after($map['converter'], 'IBroStudio_DataRepository_Contracts_');
 
@@ -63,7 +63,21 @@ it('can map ValueObjects/Number property', function () {
         ->toBeArray()
         ->toMatchArray([
             'converter' => 'Converter',
-            'object' => ValueObjects\Number::class,
+            'object' => ValueObjects\IntegerValueObject::class,
+            'attribute' => [],
+        ]);
+});
+
+it('can map ValueObjects/Float property', function () {
+    [$mapper, $converter, $property, $reflection] = getInstances('float');
+    $map = $mapper->trough($converter)->mapProperty($property, $reflection);
+    $map['converter'] = Str::after($map['converter'], 'IBroStudio_DataRepository_Contracts_');
+
+    expect($map)
+        ->toBeArray()
+        ->toMatchArray([
+            'converter' => 'Converter',
+            'object' => ValueObjects\FloatValueObject::class,
             'attribute' => [],
         ]);
 });
@@ -167,7 +181,7 @@ it('can map ValueObjects/Phone property', function () {
 });
 
 it('can map ValueObjects/TaxNumber property', function () {
-    [$mapper, $converter, $property, $reflection] = getInstances('taxNumber');
+    [$mapper, $converter, $property, $reflection] = getInstances('vatNumber');
     $map = $mapper->trough($converter)->mapProperty($property, $reflection);
     $map['converter'] = Str::after($map['converter'], 'IBroStudio_DataRepository_Contracts_');
 
@@ -175,7 +189,7 @@ it('can map ValueObjects/TaxNumber property', function () {
         ->toBeArray()
         ->toMatchArray([
             'converter' => 'Converter',
-            'object' => ValueObjects\TaxNumber::class,
+            'object' => ValueObjects\VatNumber::class,
             'attribute' => [],
         ]);
 });
@@ -190,20 +204,6 @@ it('can map ValueObjects/Timecode property', function () {
         ->toMatchArray([
             'converter' => 'Converter',
             'object' => ValueObjects\Timecode::class,
-            'attribute' => [],
-        ]);
-});
-
-it('can map ValueObjects/Uri property', function () {
-    [$mapper, $converter, $property, $reflection] = getInstances('uri');
-    $map = $mapper->trough($converter)->mapProperty($property, $reflection);
-    $map['converter'] = Str::after($map['converter'], 'IBroStudio_DataRepository_Contracts_');
-
-    expect($map)
-        ->toBeArray()
-        ->toMatchArray([
-            'converter' => 'Converter',
-            'object' => ValueObjects\Uri::class,
             'attribute' => [],
         ]);
 });

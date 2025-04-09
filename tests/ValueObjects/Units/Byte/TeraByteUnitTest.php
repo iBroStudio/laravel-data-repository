@@ -2,23 +2,23 @@
 
 use IBroStudio\DataRepository\ValueObjects\Units\Byte\TeraByteUnit;
 
-it('can instantiate', function () {
-    expect(TeraByteUnit::make(10))
+it('can instantiate TeraByteUnit', function () {
+    expect(TeraByteUnit::from(10))
         ->toBeInstanceOf(TeraByteUnit::class);
 });
 
-it('can format number with unit', function () {
+it('can return TeraByteUnit with unit', function () {
     expect(
-        TeraByteUnit::make(10.00)->value()
+        TeraByteUnit::from(10.00)->withUnit()
     )->toEqual('10TB')
         ->and(
-            TeraByteUnit::make(10.58)->value()
+            TeraByteUnit::from(10.58)->withUnit()
         )->toEqual('10.58TB')
         ->and(
-            TeraByteUnit::make(10.50)->value()
+            TeraByteUnit::from(10.50)->withUnit()
         )->toEqual('10.5TB');
 });
 
-it('can retrieve unit alone', function () {
+it('can return TeraByteUnit unit', function () {
     expect(TeraByteUnit::unit())->toEqual('TB');
 });

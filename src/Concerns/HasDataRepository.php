@@ -2,7 +2,7 @@
 
 namespace IBroStudio\DataRepository\Concerns;
 
-use IBroStudio\DataRepository\Casts\DataObjectCast;
+use IBroStudio\DataRepository\EloquentCasts\DataObjectCast;
 use IBroStudio\DataRepository\Models\DataObject;
 use IBroStudio\DataRepository\Relations\MorphManyDataObjects;
 use Illuminate\Database\Eloquent\Builder;

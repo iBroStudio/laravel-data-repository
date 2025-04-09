@@ -1,15 +1,14 @@
 <?php
 
-namespace IBroStudio\DataRepository\Casts;
+namespace IBroStudio\DataRepository\EloquentCasts;
 
+use IBroStudio\DataRepository\ValueObjects\ValueObject;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
-use MichaelRubel\ValueObjects\ValueObject;
 
 class DataObjectAttribute implements CastsAttributes
 {
-    // @phpstan-ignore-next-line
-    public function get(Model $model, string $key, mixed $value, array $attributes)
+    public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
         if (isset($attributes[$key])) {
 
@@ -23,8 +22,7 @@ class DataObjectAttribute implements CastsAttributes
         return null;
     }
 
-    // @phpstan-ignore-next-line
-    public function set(Model $model, string $key, mixed $value, array $attributes)
+    public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
         if (! is_null($value)) {
 

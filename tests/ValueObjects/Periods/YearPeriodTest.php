@@ -2,16 +2,16 @@
 
 use IBroStudio\DataRepository\ValueObjects\Periods\YearPeriod;
 
-it('can instantiate', function () {
-    expect(YearPeriod::make(10))
+it('can instantiate YearPeriod object value', function () {
+    expect(YearPeriod::from(10))
         ->toBeInstanceOf(YearPeriod::class);
 });
 
-it('can format number with unit', function () {
+it('can return DayPeriod object value with unit', function () {
     expect(
-        YearPeriod::make(1)->value()
+        YearPeriod::from(1)->withUnit()
     )->toEqual('year')
         ->and(
-            YearPeriod::make(10)->value()
+            YearPeriod::from(10)->withUnit()
         )->toEqual('10 years');
 });

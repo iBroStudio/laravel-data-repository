@@ -2,17 +2,18 @@
 
 use IBroStudio\DataRepository\ValueObjects\Units\IntegerUnit;
 
-it('can instantiate', function () {
-    expect(IntegerUnit::make(10))
+it('can instantiate IntegerUnit', function () {
+    expect(IntegerUnit::from(10))
         ->toBeInstanceOf(IntegerUnit::class);
 });
 
-it('can format number with unit', function () {
-    expect(IntegerUnit::make(1)->value())
-        ->toEqual('1');
+it('can return IntegerUnit with unit', function () {
+    expect(
+        IntegerUnit::from(10)->withUnit()
+    )->toEqual('10');
 });
 
-it('can retrieve unit alone', function () {
+it('can return IntegerUnit unit', function () {
     expect(IntegerUnit::unit())
         ->toBeNull();
 });

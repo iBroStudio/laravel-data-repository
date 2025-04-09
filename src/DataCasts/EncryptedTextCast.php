@@ -1,6 +1,6 @@
 <?php
 
-namespace IBroStudio\DataRepository\Casts;
+namespace IBroStudio\DataRepository\DataCasts;
 
 use IBroStudio\DataRepository\ValueObjects\EncryptableText;
 use Spatie\LaravelData\Casts\Cast;
@@ -11,6 +11,6 @@ class EncryptedTextCast implements Cast
 {
     public function cast(DataProperty $property, mixed $value, array $properties, CreationContext $context): mixed
     {
-        return EncryptableText::make($value);
+        return EncryptableText::from($value);
     }
 }

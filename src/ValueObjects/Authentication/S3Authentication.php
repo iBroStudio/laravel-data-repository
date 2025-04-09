@@ -3,56 +3,45 @@
 namespace IBroStudio\DataRepository\ValueObjects\Authentication;
 
 use IBroStudio\DataRepository\Contracts\Authentication;
+use IBroStudio\DataRepository\Exceptions\EmptyValueObjectException;
 use IBroStudio\DataRepository\ValueObjects\EncryptableText;
+use IBroStudio\DataRepository\ValueObjects\ValueObject;
 use Illuminate\Support\Str;
-use InvalidArgumentException;
-use MichaelRubel\ValueObjects\ValueObject;
 
 class S3Authentication extends ValueObject implements Authentication
 {
-    private string $key;
+    public readonly EncryptableText $secret;
 
-    private EncryptableText $secret;
-
-    public function __construct(string $key, EncryptableText|string $secret)
+    public function __construct(public readonly string $key, EncryptableText|string $secret)
     {
-        if (isset($this->key) || isset($this->secret)) {
-            throw new InvalidArgumentException(static::IMMUTABLE_MESSAGE);
+        try {
+            $this->secret = $secret instanceof EncryptableText
+                ? $secret
+                : EncryptableText::from($secret);
+
+        } catch (EmptyValueObjectException $e) {
+            throw EmptyValueObjectException::withMessages(['Secret cannot be empty.']);
         }
 
-        $this->key = $key;
-        $this->secret = $secret instanceof EncryptableText
-            ? $secret
-            : EncryptableText::make($secret);
-
-        $this->validate();
+        parent::__construct(
+            Str::of($this->key)
+                ->append(':')
+                ->append($this->secret->value)
+                ->value()
+        );
     }
 
     public function value(): string
     {
-        return Str::of($this->key())
+        return Str::of($this->key)
             ->append(':')
-            ->append($this->secret());
-    }
-
-    public function key(): string
-    {
-        return $this->key;
-    }
-
-    public function secret(): string
-    {
-        return $this->secret->decrypt();
+            ->append($this->secret->value);
     }
 
     protected function validate(): void
     {
         if ($this->key === '') {
-            throw new InvalidArgumentException('Username cannot be empty.');
-        }
-
-        if ($this->secret->value() === '') {
-            throw new InvalidArgumentException('Password cannot be empty.');
+            throw EmptyValueObjectException::withMessages(['Key cannot be empty.']);
         }
     }
 
@@ -60,15 +49,7 @@ class S3Authentication extends ValueObject implements Authentication
     {
         return [
             'key' => $this->key,
-            'secret' => $this->secret->value(),
-        ];
-    }
-
-    public function toDecryptedArray(): array
-    {
-        return [
-            'key' => $this->key,
-            'secret' => $this->secret->decrypt(),
+            'secret' => $this->secret->value,
         ];
     }
 }

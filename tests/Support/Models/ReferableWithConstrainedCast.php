@@ -2,8 +2,8 @@
 
 namespace IBroStudio\DataRepository\Tests\Support\Models;
 
-use IBroStudio\DataRepository\Casts\DataObjectCast;
 use IBroStudio\DataRepository\Concerns\HasDataRepository;
+use IBroStudio\DataRepository\EloquentCasts\DataObjectCast;
 use IBroStudio\DataRepository\Tests\Support\Database\Factories\ReferableFactory;
 use IBroStudio\DataRepository\Tests\Support\DataObjects\OtherReferableData;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

@@ -2,16 +2,16 @@
 
 use IBroStudio\DataRepository\ValueObjects\Periods\DayPeriod;
 
-it('can instantiate', function () {
-    expect(DayPeriod::make(10))
+it('can instantiate DayPeriod object value', function () {
+    expect(DayPeriod::from(10))
         ->toBeInstanceOf(DayPeriod::class);
 });
 
-it('can format number with unit', function () {
+it('can return DayPeriod object value with unit', function () {
     expect(
-        DayPeriod::make(1)->value()
+        DayPeriod::from(1)->withUnit()
     )->toEqual('day')
         ->and(
-            DayPeriod::make(10)->value()
+            DayPeriod::from(10)->withUnit()
         )->toEqual('10 days');
 });

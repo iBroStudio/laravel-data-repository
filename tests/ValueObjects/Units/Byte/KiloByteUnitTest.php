@@ -2,23 +2,23 @@
 
 use IBroStudio\DataRepository\ValueObjects\Units\Byte\KiloByteUnit;
 
-it('can instantiate', function () {
-    expect(KiloByteUnit::make(10))
+it('can instantiate KiloByteUnit', function () {
+    expect(KiloByteUnit::from(10))
         ->toBeInstanceOf(KiloByteUnit::class);
 });
 
-it('can format number with unit', function () {
+it('can return KiloByteUnit with unit', function () {
     expect(
-        KiloByteUnit::make(10.00)->value()
+        KiloByteUnit::from(10.00)->withUnit()
     )->toEqual('10kB')
         ->and(
-            KiloByteUnit::make(10.58)->value()
+            KiloByteUnit::from(10.58)->withUnit()
         )->toEqual('10.58kB')
         ->and(
-            KiloByteUnit::make(10.50)->value()
+            KiloByteUnit::from(10.50)->withUnit()
         )->toEqual('10.5kB');
 });
 
-it('can retrieve unit alone', function () {
+it('can return KiloByteUnit unit', function () {
     expect(KiloByteUnit::unit())->toEqual('kB');
 });

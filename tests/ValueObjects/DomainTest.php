@@ -3,55 +3,46 @@
 use IBroStudio\DataRepository\ValueObjects\Domain;
 use Illuminate\Validation\ValidationException;
 
-it('can instantiate', function () {
-    expect(Domain::make('www.ibro.studio'))
+it('can instantiate Domain object value', function () {
+    expect(Domain::from('www.ibro.studio'))
         ->toBeInstanceOf(Domain::class);
 });
 
-it('can get domain', function () {
+it('can get Domain object value', function () {
     expect(
-        Domain::make('www.ibro.studio')
-            ->value()
+        Domain::from('www.ibro.studio')->value
     )
         ->toBe('www.ibro.studio');
 });
 
-it('can get subdomain', function () {
-    expect(
-        Domain::make('www.ibro.studio')
-            ->subdomain()
-    )
-        ->toBe('www');
+it('can return Domain object value single property', function () {
+    $domain = Domain::from('www.ibro.studio');
+
+    expect($domain->subDomain)->toEqual('www')
+        ->and($domain->name)->toEqual('ibro')
+        ->and($domain->tld)->toEqual('studio')
+        ->and($domain->registrableDomain)->toEqual('ibro.studio');
 });
 
-it('can get domain name', function () {
-    expect(
-        Domain::make('www.ibro.studio')
-            ->name()
-    )
-        ->toBe('ibro');
+it('can return Domain object value properties', function () {
+    $fullname = Domain::from('www.ibro.studio');
+
+    expect($fullname->properties())->toMatchArray([
+        'value' => 'www.ibro.studio',
+        'subDomain' => 'www',
+        'name' => 'ibro',
+        'tld' => 'studio',
+        'registrableDomain' => 'ibro.studio',
+    ]);
 });
 
-it('can get domain tld', function () {
+it('can extract Domain object value from an url', function () {
     expect(
-        Domain::make('www.ibro.studio')
-            ->tld()
+        Domain::from('https://www.ibro.studio/test')->value
     )
-        ->toBe('studio');
+        ->toBe('www.ibro.studio');
 });
 
-it('can get registrable domain', function () {
-    expect(
-        Domain::make('www.ibro.studio')
-            ->registrable()
-    )
-        ->toBe('ibro.studio');
-});
-
-it('can not instantiate with non domain', function () {
-    Domain::make('123');
-})->throws(ValidationException::class);
-
-it('can not instantiate when domain is in url', function () {
-    Domain::make('https://www.ibro.studio');
+it('can validate Domain object value', function () {
+    Domain::from('123');
 })->throws(ValidationException::class);

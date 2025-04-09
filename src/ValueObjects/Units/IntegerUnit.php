@@ -3,13 +3,13 @@
 namespace IBroStudio\DataRepository\ValueObjects\Units;
 
 use IBroStudio\DataRepository\Contracts\UnitValueContract;
-use IBroStudio\DataRepository\ValueObjects\Number;
+use IBroStudio\DataRepository\ValueObjects\IntegerValueObject;
 
-class IntegerUnit extends Number implements UnitValueContract
+class IntegerUnit extends IntegerValueObject implements UnitValueContract
 {
-    public function value(): string
+    public function withUnit(): string
     {
-        return (string) $this->asInteger();
+        return (string) $this->value;
     }
 
     public static function unit(): ?string

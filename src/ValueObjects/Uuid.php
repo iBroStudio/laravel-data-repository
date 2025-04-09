@@ -2,4 +2,17 @@
 
 namespace IBroStudio\DataRepository\ValueObjects;
 
-class Uuid extends \MichaelRubel\ValueObjects\Collection\Complex\Uuid {}
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
+
+class Uuid extends ValueObject
+{
+    protected function validate(): void
+    {
+        parent::validate();
+
+        if (! Str::of($this->value)->isUuid()) {
+            throw ValidationException::withMessages(['UUID is not valid.']);
+        }
+    }
+}

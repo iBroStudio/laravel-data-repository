@@ -2,12 +2,14 @@
 
 namespace IBroStudio\DataRepository\ValueObjects;
 
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Spatie\Url\QueryParameterBag;
 use Spatie\Url\Url as ParsedUrl;
 
-class Url extends \MichaelRubel\ValueObjects\Collection\Complex\Url
+class Url extends ValueObject
 {
-    protected ParsedUrl $url;
+    private ParsedUrl $url;
 
     public function __construct(string $value)
     {
@@ -174,5 +176,19 @@ class Url extends \MichaelRubel\ValueObjects\Collection\Complex\Url
     public function matches(ParsedUrl $url): bool
     {
         return $this->url->matches($url);
+    }
+
+    protected function validate(): void
+    {
+        parent::validate();
+
+        $validator = Validator::make(
+            ['url' => $this->value],
+            ['url' => 'url'],
+        );
+
+        if ($validator->fails()) {
+            throw ValidationException::withMessages(['URL is not valid.']);
+        }
     }
 }

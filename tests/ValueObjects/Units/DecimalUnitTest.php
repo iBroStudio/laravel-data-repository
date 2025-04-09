@@ -2,24 +2,24 @@
 
 use IBroStudio\DataRepository\ValueObjects\Units\DecimalUnit;
 
-it('can instantiate', function () {
-    expect(DecimalUnit::make(10.46))
+it('can instantiate DecimalUnit', function () {
+    expect(DecimalUnit::from(10.46))
         ->toBeInstanceOf(DecimalUnit::class);
 });
 
-it('can format number with unit', function () {
+it('can return DecimalUnit with unit', function () {
     expect(
-        DecimalUnit::make(10.00)->value()
+        DecimalUnit::from(10.00)->withUnit()
     )->toEqual('10')
         ->and(
-            DecimalUnit::make(10.58)->value()
+            DecimalUnit::from(10.58)->withUnit()
         )->toEqual('10.58')
         ->and(
-            DecimalUnit::make(10.50)->value()
+            DecimalUnit::from(10.50)->withUnit()
         )->toEqual('10.5');
 });
 
-it('can retrieve unit alone', function () {
+it('can return DecimalUnit unit', function () {
     expect(DecimalUnit::unit())
         ->toBeNull();
 });

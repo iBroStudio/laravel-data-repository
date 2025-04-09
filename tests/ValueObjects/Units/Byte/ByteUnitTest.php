@@ -5,43 +5,53 @@ use IBroStudio\DataRepository\Enums\ByteUnitEnum;
 use IBroStudio\DataRepository\ValueObjects\Units\Byte\ByteUnit;
 use Illuminate\Validation\ValidationException;
 
-it('can instantiate from string', function () {
+it('can instantiate ByteUnit from string', function () {
     expect(
-        ByteUnit::make('1.42MB')
+        ByteUnit::from('1.42MB')
     )->toBeInstanceOf(ByteUnit::class);
 });
 
-it('can instantiate from ByteUnits', function () {
+it('can instantiate ByteUnit from Metric', function () {
     expect(
-        ByteUnit::make(Metric::gigabytes(12))
+        ByteUnit::from(Metric::gigabytes(12))
     )->toBeInstanceOf(ByteUnit::class);
 });
 
-it('can instantiate from number', function () {
+it('can instantiate ByteUnit from number', function () {
     expect(
-        ByteUnit::make(12.5)
+        ByteUnit::from(12.5)
     )->toBeInstanceOf(ByteUnit::class);
 });
 
-it('throws error on validation', function () {
-    ByteUnit::make('aaa');
+it('can validate ByteUnit', function () {
+    ByteUnit::from('aaa');
 })->throws(ValidationException::class);
 
-it('can give a well formated output', function () {
+it('can return ByteUnit value', function () {
     expect(
-        ByteUnit::make('1.42MB')
+        ByteUnit::from('1.42MB')->value
+    )->toEqual(1420000);
+});
+
+it('can return ByteUnit with unit', function () {
+    expect(
+        ByteUnit::from('1.42MB')->withUnit()
     )->toEqual('1.42MB');
 });
 
-it('can convert unit', function () {
+it('can return ByteUnit unit', function () {
+    expect(ByteUnit::unit())->toEqual('B');
+});
+
+it('can convert ByteUnit', function () {
     expect(
-        ByteUnit::make('120MB')->value(unit: ByteUnitEnum::GB)
+        ByteUnit::from('120MB')->convertIn(ByteUnitEnum::GB)
     )->toEqual('0.12GB');
 });
 
-it('can compare values', function () {
-    $value = ByteUnit::make('1.42MB');
-    $value2 = ByteUnit::make('2MB');
+it('can compare ByteUnit values', function () {
+    $value = ByteUnit::from('1.42MB');
+    $value2 = ByteUnit::from('2MB');
     expect($value->isEqualTo('2GB'))->toBeFalse()
         ->and($value->isLessThanOrEqualTo('2GB'))->toBeTrue()
         ->and($value->isLessThan('2GB'))->toBeTrue()
@@ -62,15 +72,4 @@ it('can compare values', function () {
         ->and($value->isLessThan($value2))->toBeTrue()
         ->and($value->isGreaterThanOrEqualTo($value2))->toBeFalse()
         ->and($value->isGreaterThan($value2))->toBeFalse();
-});
-
-it('can give the number of bytes', function () {
-    expect(
-        ByteUnit::make('1.42MB')
-            ->bytes()
-    )->toEqual(1420000);
-});
-
-it('can retrieve unit alone', function () {
-    expect(ByteUnit::unit())->toEqual('B');
 });

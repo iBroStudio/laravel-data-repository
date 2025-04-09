@@ -3,15 +3,15 @@
 use IBroStudio\DataRepository\ValueObjects\LastName;
 use Illuminate\Support\Str;
 
-it('can instantiate', function () {
-    expect(LastName::make(fake()->lastName))
+it('can instantiate LastName object value', function () {
+    expect(LastName::from(fake()->lastName))
         ->toBeInstanceOf(LastName::class);
 });
 
-it('formats name', function () {
+it('formats name LastName object value', function () {
     $name = fake()->lastName;
 
     expect(
-        LastName::make($name)->value()
+        LastName::from($name)->value
     )->toEqual(Str::upper($name));
 });

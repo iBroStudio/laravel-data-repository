@@ -2,9 +2,9 @@
 
 namespace IBroStudio\DataRepository\Relations;
 
+use IBroStudio\DataRepository\ValueObjects\ValueObject;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use MichaelRubel\ValueObjects\ValueObject;
 use Spatie\LaravelData\Data;
 
 class MorphManyDataObjects extends MorphMany

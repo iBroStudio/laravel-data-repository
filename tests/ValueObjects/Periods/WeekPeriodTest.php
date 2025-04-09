@@ -2,16 +2,16 @@
 
 use IBroStudio\DataRepository\ValueObjects\Periods\WeekPeriod;
 
-it('can instantiate', function () {
-    expect(WeekPeriod::make(10))
+it('can instantiate WeekPeriod object value', function () {
+    expect(WeekPeriod::from(10))
         ->toBeInstanceOf(WeekPeriod::class);
 });
 
-it('can format number with unit', function () {
+it('can return DayPeriod object value with unit', function () {
     expect(
-        WeekPeriod::make(1)->value()
+        WeekPeriod::from(1)->withUnit()
     )->toEqual('week')
         ->and(
-            WeekPeriod::make(10)->value()
+            WeekPeriod::from(10)->withUnit()
         )->toEqual('10 weeks');
 });

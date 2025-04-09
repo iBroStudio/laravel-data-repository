@@ -2,18 +2,14 @@
 
 namespace IBroStudio\DataRepository\ValueObjects;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Stringable;
+use IBroStudio\DataRepository\Formatters\NameFormatter;
 
-class FirstName extends Name
+class FirstName extends ValueObject
 {
-    protected string|Stringable $value;
-
-    public function value(): string
+    public function __construct(mixed $value)
     {
-        return Str::of($this->value)
-            ->lower()
-            ->ucfirst()
-            ->toString();
+        parent::__construct(
+            NameFormatter::format($value)
+        );
     }
 }

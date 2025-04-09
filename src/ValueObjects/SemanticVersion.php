@@ -7,8 +7,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use Illuminate\Validation\ValidationException;
-use InvalidArgumentException;
-use MichaelRubel\ValueObjects\ValueObject;
 
 class SemanticVersion extends ValueObject
 {
@@ -20,63 +18,29 @@ class SemanticVersion extends ValueObject
 
     private string $prefix = '';
 
-    private bool $withPrefix = true;
-
-    public function __construct(string $value)
+    public function __construct(mixed $value)
     {
-        if (isset($this->major)
-            || isset($this->minor)
-            || isset($this->patch)
-        ) {
-            throw new InvalidArgumentException(static::IMMUTABLE_MESSAGE);
+        preg_match(
+            '/(?<prefix>v.?)?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)/',
+            $value,
+            $matches
+        );
+
+        if (! count($matches)) {
+            throw ValidationException::withMessages(['Version is not valid.']);
         }
 
-        if (
-            preg_match(
-                '/(?<prefix>v.?)?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)/',
-                $value,
-                $matches
-            )
-        ) {
-            $this->major = (int) $matches['major'];
-            $this->minor = (int) $matches['minor'];
-            $this->patch = (int) $matches['patch'];
-            $this->prefix = $matches['prefix'];
-        }
+        $this->major = (int) $matches['major'];
+        $this->minor = (int) $matches['minor'];
+        $this->patch = (int) $matches['patch'];
+        $this->prefix = $matches['prefix'];
 
-        $this->validate();
+        parent::__construct($value);
     }
 
-    /**
-     * @throws ValidationException
-     */
-    protected function validate(): void
+    public function withoutPrefix(): string
     {
-        if (! isset($this->major) || ! isset($this->minor) || ! isset($this->patch)) {
-            throw ValidationException::withMessages(['Value is not a valid semantic version.']);
-        }
-    }
-
-    public function withoutPrefix(): self
-    {
-        $this->withPrefix = false;
-
-        return $this;
-    }
-
-    public function value(): string
-    {
-        return Str::of(
-            Arr::join(
-                [$this->major, $this->minor, $this->patch],
-                '.'
-            )
-        )
-            ->when($this->withPrefix, function (Stringable $string) {
-                return $string->prepend($this->prefix);
-            }, function () {
-                $this->withPrefix = true; // reset the property
-            });
+        return Str::after($this->value, $this->prefix);
     }
 
     public function increment(SemanticVersionSegments $segment): static
@@ -94,6 +58,17 @@ class SemanticVersion extends ValueObject
             $incremented->patch = 0;
         }
 
-        return $incremented;
+        return self::from(
+            Str::of(
+                Arr::join(
+                    [$incremented->major, $incremented->minor, $incremented->patch],
+                    '.'
+                )
+            )
+                ->when(Str::length($this->prefix), function (Stringable $string) {
+                    return $string->prepend($this->prefix);
+                })
+                ->toString()
+        );
     }
 }

@@ -3,19 +3,23 @@
 use IBroStudio\DataRepository\ValueObjects\IpAddress;
 use Illuminate\Validation\ValidationException;
 
-it('can instantiate', function () {
-    expect(IpAddress::make(fake()->ipv4()))->toBeInstanceOf(IpAddress::class)
-        ->and(IpAddress::make(fake()->ipv6()))->toBeInstanceOf(IpAddress::class);
+it('can instantiate IpAddress object value', function () {
+    expect(IpAddress::from(fake()->ipv4()))->toBeInstanceOf(IpAddress::class)
+        ->and(IpAddress::from(fake()->ipv6()))->toBeInstanceOf(IpAddress::class);
 });
 
-it('throws error on validation', function () {
-    IpAddress::make('116.112');
+it('can validate IpAddress object value', function () {
+    IpAddress::from('116.112');
 })->throws(ValidationException::class);
 
-it('can give a well formated output', function () {
-    $ipv4 = IpAddress::make(fake()->ipv4());
-    $ipv6 = IpAddress::make(fake()->ipv6());
+it('can return IpAddress object value', function () {
+    $ipv4 = fake()->ipv4();
+    $ipv6 = fake()->ipv6();
 
-    expect($ipv4->value())->toEqual($ipv4)
-        ->and($ipv6->value())->toEqual($ipv6);
+    expect(
+        IpAddress::from($ipv4)->value
+    )->toEqual($ipv4)
+        ->and(
+            IpAddress::from($ipv6)->value
+        )->toEqual($ipv6);
 });

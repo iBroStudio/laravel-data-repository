@@ -4,7 +4,7 @@ namespace IBroStudio\DataRepository\Conversion\Converters;
 
 use IBroStudio\DataRepository\Conversion\BaseConverter;
 use IBroStudio\DataRepository\Exceptions\PropertyConversionFailedException;
-use MichaelRubel\ValueObjects\ValueObject;
+use IBroStudio\DataRepository\ValueObjects\ValueObject;
 use ReflectionClass;
 use ReflectionProperty;
 
@@ -18,8 +18,7 @@ class ObjectValueConverter extends BaseConverter
     public function convert(ReflectionClass $reflection, ReflectionProperty $property, mixed $data): mixed
     {
         try {
-            return $reflection->newInstanceWithoutConstructor()
-                ->make($data);
+            return $reflection->newInstanceWithoutConstructor()->from($data);
         } catch (\Exception $e) {
             throw new PropertyConversionFailedException($e->getMessage());
         }

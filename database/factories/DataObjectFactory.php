@@ -24,11 +24,11 @@ class DataObjectFactory extends Factory
             'class' => ReferableData::class,
             'values' => new ReferableData(
                 name: fake()->name(),
-                password: EncryptableText::make(fake()->password()),
-                authentication: SshAuthentication::make(
+                password: EncryptableText::from(fake()->password()),
+                authentication: SshAuthentication::from(
                     username: fake()->userName(),
-                    privateKey: EncryptableText::make(fake()->macAddress()),
-                    passphrase: EncryptableText::make(fake()->password()),
+                    privateKey: EncryptableText::from(fake()->macAddress()),
+                    passphrase: EncryptableText::from(fake()->password()),
                 )
             ),
         ];

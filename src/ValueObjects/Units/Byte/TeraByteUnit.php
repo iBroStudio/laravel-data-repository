@@ -4,18 +4,17 @@ namespace IBroStudio\DataRepository\ValueObjects\Units\Byte;
 
 use ByteUnits\Metric;
 use IBroStudio\DataRepository\Contracts\UnitValueContract;
+use IBroStudio\DataRepository\Enums\ByteUnitEnum;
 
 class TeraByteUnit extends ByteUnit implements UnitValueContract
 {
-    public static function make(mixed ...$values): static
+    public static function from(mixed ...$values): static
     {
-        return new static(
-            Metric::terabytes($values[0])
-        );
+        return parent::from(Metric::terabytes(current($values)));
     }
 
     public static function unit(): ?string
     {
-        return 'TB';
+        return ByteUnitEnum::TB->getLabel();
     }
 }

@@ -11,6 +11,6 @@ class EncryptableTextTransformer implements Transformer
     public function transform(DataProperty $property, mixed $value, TransformationContext $context): string
     {
         /** @var \IBroStudio\DataRepository\ValueObjects\EncryptableText $value */
-        return $value->value();
+        return $value->value;
     }
 }

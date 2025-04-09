@@ -1,29 +1,34 @@
 <?php
 
 use IBroStudio\DataRepository\ValueObjects\Url;
+use Illuminate\Validation\ValidationException;
 
-it('can instantiate', function () {
-    expect(Url::make('https://ibro.studio/test'))
+it('can instantiate Url object value', function () {
+    expect(Url::from('https://ibro.studio/test'))
         ->toBeInstanceOf(Url::class);
 });
 
-it('can get scheme', function () {
-    $url = Url::make('https://ibro.studio/directory/test?val1=1&val2=2');
-
-    expect($url->getScheme())->toBe('https');
+it('can get Url object value scheme', function () {
+    expect(
+        Url::from('https://ibro.studio/directory/test?val1=1&val2=2')->getScheme()
+    )->toBe('https');
 });
 
-it('can get path segments', function () {
-    $url = Url::make('https://ibro.studio/directory/test?val1=1&val2=2');
+it('can get Url object value path segments', function () {
+    $url = Url::from('https://ibro.studio/directory/test?val1=1&val2=2');
 
     expect($url->getSegment(1))->toBe('directory')
         ->and($url->getSegment(2))->toBe('test');
 });
 
-it('can get query parameters', function () {
-    $url = Url::make('https://ibro.studio/directory/test?val1=1&val2=2');
+it('can get Url object value query parameters', function () {
+    $url = Url::from('https://ibro.studio/directory/test?val1=1&val2=2');
 
     expect($url->getQuery())->toBe('val1=1&val2=2')
         ->and($url->getQueryParameter('val1'))->toBe('1')
         ->and($url->getQueryParameter('val2'))->toBe('2');
 });
+
+it('can validate Url object value', function () {
+    Url::from('invalid url');
+})->throws(ValidationException::class);

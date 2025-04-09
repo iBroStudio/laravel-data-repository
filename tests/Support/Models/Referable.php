@@ -2,9 +2,9 @@
 
 namespace IBroStudio\DataRepository\Tests\Support\Models;
 
-use IBroStudio\DataRepository\Casts\DataObjectCast;
-use IBroStudio\DataRepository\Casts\ValueObjectCast;
 use IBroStudio\DataRepository\Concerns\HasDataRepository;
+use IBroStudio\DataRepository\EloquentCasts\DataObjectCast;
+use IBroStudio\DataRepository\EloquentCasts\ValueObjectCast;
 use IBroStudio\DataRepository\Tests\Support\Database\Factories\ReferableFactory;
 use IBroStudio\DataRepository\ValueObjects\TimeDuration;
 use IBroStudio\DataRepository\ValueObjects\Url;

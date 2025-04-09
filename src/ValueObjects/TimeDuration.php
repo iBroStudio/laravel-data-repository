@@ -5,19 +5,14 @@ namespace IBroStudio\DataRepository\ValueObjects;
 use Carbon\CarbonInterval;
 use IBroStudio\DataRepository\Enums\TimeUnitEnum;
 use Illuminate\Support\Str;
-use InvalidArgumentException;
-use MichaelRubel\ValueObjects\ValueObject;
+use Illuminate\Validation\ValidationException;
 
 class TimeDuration extends ValueObject
 {
     private CarbonInterval $duration;
 
-    public function __construct(float|string $value, protected TimeUnitEnum|string|null $unit = null)
+    public function __construct(mixed $value, protected TimeUnitEnum|string|null $unit = null)
     {
-        if (isset($this->duration)) {
-            throw new InvalidArgumentException(static::IMMUTABLE_MESSAGE);
-        }
-
         if (! $this->unit instanceof TimeUnitEnum) {
             $this->unit = is_string($this->unit) ?
                 TimeUnitEnum::from($this->unit) : TimeUnitEnum::MINUTES;
@@ -25,9 +20,15 @@ class TimeDuration extends ValueObject
 
         if (Str::contains($value, ':')) {
             $this->fromString($value);
-        } else {
+        } elseif (is_float($value)) {
             $this->fromFloat($value);
+        } else {
+            throw ValidationException::withMessages(['TimeDuration is invalid.']);
         }
+
+        parent::__construct(
+            (string) $this->duration->total($this->unit->value)
+        );
     }
 
     private function fromFloat(float $value): void
@@ -42,11 +43,6 @@ class TimeDuration extends ValueObject
         } else {
             $this->duration = CarbonInterval::createFromFormat('i:s', $value);
         }
-    }
-
-    public function value(): string
-    {
-        return (string) $this->duration->total($this->unit->value);
     }
 
     public function format(bool $short = false): string

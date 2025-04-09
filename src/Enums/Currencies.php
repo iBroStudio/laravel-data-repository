@@ -2,9 +2,7 @@
 
 namespace IBroStudio\DataRepository\Enums;
 
-use Filament\Support\Contracts\HasLabel;
-
-enum Currencies: string implements HasLabel
+enum Currencies: string
 {
     case AED = 'United Arab Emirates dirham';
     case AFN = 'Afghan afghani';
@@ -167,17 +165,17 @@ enum Currencies: string implements HasLabel
     case ZAR = 'South African rand';
     case ZMW = 'Zambian kwacha';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return $this->value;
     }
 
-    public function getAlphaCode(): ?string
+    public function getAlphaCode(): string
     {
         return $this->name;
     }
 
-    public function getNumericCode(): ?string
+    public function getNumericCode(): string
     {
         return match ($this) {
             self::AED => '784',

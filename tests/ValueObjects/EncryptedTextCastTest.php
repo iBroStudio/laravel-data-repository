@@ -6,7 +6,7 @@ use IBroStudio\DataRepository\ValueObjects\EncryptableText;
 it('can build dto casting EncryptableText property', function () {
     $data = new WithEncryptableTextData(
         name: fake()->name(),
-        secret: EncryptableText::make(fake()->word())
+        secret: EncryptableText::from(fake()->word())
     );
 
     expect($data)->toBeInstanceOf(WithEncryptableTextData::class);

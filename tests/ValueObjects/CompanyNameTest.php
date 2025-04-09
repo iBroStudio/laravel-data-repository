@@ -2,13 +2,13 @@
 
 use IBroStudio\DataRepository\ValueObjects\CompanyName;
 
-it('can instantiate', function () {
-    expect(CompanyName::make('iBroStudio'))
+it('can instantiate CompanyName object value', function () {
+    expect(CompanyName::from('iBroStudio'))
         ->toBeInstanceOf(CompanyName::class);
 });
 
-it('formats name', function () {
+it('formats name CompanyName object value', function () {
     expect(
-        CompanyName::make('iBroStudio')->value()
-    )->toEqual('IBROSTUDIO');
+        CompanyName::from('iBroStudio')->value
+    )->toEqual('Ibrostudio');
 });

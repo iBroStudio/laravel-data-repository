@@ -2,52 +2,70 @@
 
 use IBroStudio\DataRepository\Enums\SemanticVersionSegments;
 use IBroStudio\DataRepository\ValueObjects\SemanticVersion;
+use Illuminate\Validation\ValidationException;
 
-it('can instantiate', function () {
-    $version = SemanticVersion::make(fake()->semver());
-
-    expect($version)->toBeInstanceOf(SemanticVersion::class);
+it('can instantiate SemanticVersion object value', function () {
+    expect(
+        SemanticVersion::from(fake()->semver())
+    )->toBeInstanceOf(SemanticVersion::class);
 });
 
-it('can give a well formated version', function () {
+it('can return SemanticVersion object value', function () {
     $version = fake()->semver();
-    $valueObject = SemanticVersion::make($version);
 
-    expect($valueObject->value())->toEqual($version);
+    expect(
+        SemanticVersion::from($version)->value
+    )->toEqual($version);
 });
 
-it('can handle prefix', function () {
+it('can handle SemanticVersion object value with prefix', function () {
     $version = 'v.'.fake()->semver();
-    $valueObject = SemanticVersion::make($version);
 
-    expect($valueObject->value())->toEqual($version);
+    expect(
+        SemanticVersion::from($version)->value
+    )->toEqual($version);
 });
 
-it('can give prefixed version without prefix', function () {
+it('can return prefixed SemanticVersion object value without prefix', function () {
     $version = fake()->semver();
-    $prefix = 'v.';
-    $valueObject = SemanticVersion::make($prefix.$version);
 
-    expect($valueObject->withoutPrefix()->value())->toEqual($version);
+    expect(
+        SemanticVersion::from('v.'.$version)->withoutPrefix()
+    )->toEqual($version);
 });
 
-it('can increment major segment', function () {
-    $version = SemanticVersion::make('1.0.0');
-    $incremented = $version->increment(SemanticVersionSegments::MAJOR);
+it('can validate SemanticVersion object value', function () {
+    SemanticVersion::from('invalid version');
+})->throws(ValidationException::class);
 
-    expect($incremented->value())->toEqual('2.0.0');
+it('can increment SemanticVersion major segment', function () {
+    expect(
+        SemanticVersion::from('1.0.0')
+            ->increment(SemanticVersionSegments::MAJOR)
+            ->value
+    )->toEqual('2.0.0');
 });
 
-it('can increment minor segment', function () {
-    $version = SemanticVersion::make('1.0.0');
-    $incremented = $version->increment(SemanticVersionSegments::MINOR);
-
-    expect($incremented->value())->toEqual('1.1.0');
+it('can increment SemanticVersion minor segment', function () {
+    expect(
+        SemanticVersion::from('1.0.0')
+            ->increment(SemanticVersionSegments::MINOR)
+            ->value
+    )->toEqual('1.1.0');
 });
 
-it('can increment patch segment', function () {
-    $version = SemanticVersion::make('1.0.0');
-    $incremented = $version->increment(SemanticVersionSegments::PATCH);
+it('can increment SemanticVersion patch segment', function () {
+    expect(
+        SemanticVersion::from('1.0.0')
+            ->increment(SemanticVersionSegments::PATCH)
+            ->value
+    )->toEqual('1.0.1');
+});
 
-    expect($incremented->value())->toEqual('1.0.1');
+it('can increment SemanticVersion with prefix', function () {
+    expect(
+        SemanticVersion::from('v.1.0.0')
+            ->increment(SemanticVersionSegments::MAJOR)
+            ->value
+    )->toEqual('v.2.0.0');
 });

@@ -1,6 +1,6 @@
 <?php
 
-namespace IBroStudio\DataRepository\Casts;
+namespace IBroStudio\DataRepository\EloquentCasts;
 
 use IBroStudio\DataRepository\Exceptions\DataObjectCastException;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
@@ -16,8 +16,7 @@ class DataObjectCast implements CastsAttributes
         }
     }
 
-    // @phpstan-ignore-next-line
-    public function get(Model $model, string $key, mixed $value, array $attributes)
+    public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
         if (is_int($value)) {
             // @phpstan-ignore-next-line
@@ -27,8 +26,7 @@ class DataObjectCast implements CastsAttributes
         return $value;
     }
 
-    // @phpstan-ignore-next-line
-    public function set(Model $model, string $key, mixed $value, array $attributes)
+    public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
         if (! is_null($value)
             && ! is_int($value)

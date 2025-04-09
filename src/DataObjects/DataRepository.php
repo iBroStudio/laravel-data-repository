@@ -4,8 +4,8 @@ namespace IBroStudio\DataRepository\DataObjects;
 
 use IBroStudio\DataRepository\Concerns\ConvertiblesDataProperties;
 use IBroStudio\DataRepository\Contracts\Authentication;
+use IBroStudio\DataRepository\ValueObjects\ValueObject;
 use Illuminate\Support\Collection;
-use MichaelRubel\ValueObjects\ValueObject;
 use Spatie\LaravelData\Data;
 
 abstract class DataRepository extends Data
@@ -20,11 +20,7 @@ abstract class DataRepository extends Data
 
         foreach ($properties as $property) {
             if (is_a($this->{$property->name}, ValueObject::class)) {
-                if (is_a($this->{$property->name}, Authentication::class)) {
-                    $data = $data->merge($this->{$property->name}->toDecryptedArray());
-                } else {
-                    $data = $data->merge($this->{$property->name}->toArray());
-                }
+                $data = $data->merge($this->{$property->name}->toArray());
             } else {
                 $data->put($property->name, $this->{$property->name});
             }

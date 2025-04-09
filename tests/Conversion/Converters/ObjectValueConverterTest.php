@@ -31,7 +31,8 @@ it('can convert property', function (string $key, mixed $data, string $expectedC
 })->with([
     ['text', fake()->text(), ValueObjects\Text::class],
     ['boolean', fake()->boolean(), ValueObjects\Boolean::class],
-    ['number', fake()->numberBetween(), ValueObjects\Number::class],
+    ['integer', fake()->numberBetween(), ValueObjects\IntegerValueObject::class],
+    ['float', fake()->numberBetween(), ValueObjects\FloatValueObject::class],
     ['classString', DataObject::class, ValueObjects\ClassString::class],
     ['email', fake()->email(), ValueObjects\Email::class],
     ['encryptableText', fake()->word(), ValueObjects\EncryptableText::class],
@@ -39,9 +40,8 @@ it('can convert property', function (string $key, mixed $data, string $expectedC
     ['hashedPassword', fake()->password(), ValueObjects\HashedPassword::class],
     ['name', fake()->firstName(), ValueObjects\Name::class],
     ['phone', fake()->e164PhoneNumber(), ValueObjects\Phone::class],
-    ['taxNumber', 'FR54879706885', ValueObjects\TaxNumber::class],
+    ['vatNumber', 'FR54879706885', ValueObjects\VatNumber::class],
     ['timecode', fake()->time('H:i:s:v'), ValueObjects\Timecode::class],
-    ['uri', fake()->url(), ValueObjects\Uri::class],
     ['url', fake()->url(), ValueObjects\Url::class],
     ['uuid', fake()->uuid(), ValueObjects\Uuid::class],
 ]);

@@ -2,8 +2,8 @@
 
 namespace IBroStudio\DataRepository\Models;
 
-use IBroStudio\DataRepository\Casts\DataObjectAttribute;
 use IBroStudio\DataRepository\Database\Factories\DataObjectFactory;
+use IBroStudio\DataRepository\EloquentCasts\DataObjectAttribute;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

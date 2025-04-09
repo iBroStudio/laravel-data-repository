@@ -2,14 +2,37 @@
 
 namespace IBroStudio\DataRepository\ValueObjects;
 
-class Email extends \MichaelRubel\ValueObjects\Collection\Complex\Email
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+
+class Email extends ValueObject
 {
-    public static function from(mixed ...$values): static
+    public readonly string $username;
+
+    public readonly string $domain;
+
+    public function __construct(mixed $value)
     {
-        if (array_key_exists('email', $values)) {
-            return static::make($values['email']);
+        try {
+            [$this->username, $this->domain] = explode('@', $value);
+        } catch (\Exception $e) {
+            throw ValidationException::withMessages(['Email is not valid.']);
         }
 
-        return static::make(...$values);
+        parent::__construct($value);
+    }
+
+    protected function validate(): void
+    {
+        parent::validate();
+
+        $validator = Validator::make(
+            ['email' => $this->value],
+            ['email' => 'email:filter,spoof'],
+        );
+
+        if ($validator->fails()) {
+            throw ValidationException::withMessages(['Email is not valid.']);
+        }
     }
 }

@@ -2,23 +2,23 @@
 
 use IBroStudio\DataRepository\ValueObjects\Units\Byte\GigaByteUnit;
 
-it('can instantiate', function () {
-    expect(GigaByteUnit::make(10))
+it('can instantiate GigaByteUnit', function () {
+    expect(GigaByteUnit::from(10))
         ->toBeInstanceOf(GigaByteUnit::class);
 });
 
-it('can format number with unit', function () {
+it('can return GigaByteUnit with unit', function () {
     expect(
-        GigaByteUnit::make(10.00)->value()
+        GigaByteUnit::from(10.00)->withUnit()
     )->toEqual('10GB')
         ->and(
-            GigaByteUnit::make(10.58)->value()
+            GigaByteUnit::from(10.58)->withUnit()
         )->toEqual('10.58GB')
         ->and(
-            GigaByteUnit::make(10.50)->value()
+            GigaByteUnit::from(10.50)->withUnit()
         )->toEqual('10.5GB');
 });
 
-it('can retrieve unit alone', function () {
+it('can return GigaByteUnit unit', function () {
     expect(GigaByteUnit::unit())->toEqual('GB');
 });

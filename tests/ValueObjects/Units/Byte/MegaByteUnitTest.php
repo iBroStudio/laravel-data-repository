@@ -2,23 +2,23 @@
 
 use IBroStudio\DataRepository\ValueObjects\Units\Byte\MegaByteUnit;
 
-it('can instantiate', function () {
-    expect(MegaByteUnit::make(10))
+it('can instantiate MegaByteUnit', function () {
+    expect(MegaByteUnit::from(10))
         ->toBeInstanceOf(MegaByteUnit::class);
 });
 
-it('can format number with unit', function () {
+it('can return MegaByteUnit with unit', function () {
     expect(
-        MegaByteUnit::make(10.00)->value()
+        MegaByteUnit::from(10.00)->withUnit()
     )->toEqual('10MB')
         ->and(
-            MegaByteUnit::make(10.58)->value()
+            MegaByteUnit::from(10.58)->withUnit()
         )->toEqual('10.58MB')
         ->and(
-            MegaByteUnit::make(10.50)->value()
+            MegaByteUnit::from(10.50)->withUnit()
         )->toEqual('10.5MB');
 });
 
-it('can retrieve unit alone', function () {
+it('can return MegaByteUnit unit', function () {
     expect(MegaByteUnit::unit())->toEqual('MB');
 });

@@ -2,27 +2,28 @@
 
 use IBroStudio\DataRepository\ValueObjects\EncryptableText;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Validation\ValidationException;
 
-it('can instantiate', function () {
-    $encryptableText = EncryptableText::make(fake()->word());
+it('can instantiate EncryptableText object value', function () {
+    $encryptableText = EncryptableText::from(fake()->word());
 
     expect($encryptableText)->toBeInstanceOf(EncryptableText::class);
 });
 
-it('can instantiate from encrypted string', function () {
+it('can instantiate EncryptableText object value from encrypted string', function () {
     $encrypted = Crypt::encryptString(fake()->word());
-    $encryptableText = EncryptableText::make($encrypted);
+    $encryptableText = EncryptableText::from($encrypted);
 
     expect($encryptableText)->toBeInstanceOf(EncryptableText::class);
 });
 
-it('validate encrypted value', function () {
+it('can validate EncryptableText object value', function () {
     new EncryptableText(fake()->word());
-})->throws(\InvalidArgumentException::class);
+})->throws(ValidationException::class);
 
-it('can decrypt', function () {
+it('can decrypt EncryptableText object value', function () {
     $text = fake()->word();
-    $encryptableText = EncryptableText::make($text);
+    $encryptableText = EncryptableText::from($text);
 
     expect($encryptableText->decrypt())->toEqual($text);
 });

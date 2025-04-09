@@ -3,56 +3,38 @@
 namespace IBroStudio\DataRepository\ValueObjects\Authentication;
 
 use IBroStudio\DataRepository\Contracts\Authentication;
+use IBroStudio\DataRepository\Exceptions\EmptyValueObjectException;
 use IBroStudio\DataRepository\ValueObjects\EncryptableText;
+use IBroStudio\DataRepository\ValueObjects\ValueObject;
 use Illuminate\Support\Str;
-use InvalidArgumentException;
-use MichaelRubel\ValueObjects\ValueObject;
 
 class BasicAuthentication extends ValueObject implements Authentication
 {
-    private string $username;
+    public readonly EncryptableText $password;
 
-    private EncryptableText $password;
-
-    public function __construct(string $username, EncryptableText|string $password)
+    public function __construct(public readonly string $username, EncryptableText|string $password)
     {
-        if (isset($this->username) || isset($this->password)) {
-            throw new InvalidArgumentException(static::IMMUTABLE_MESSAGE);
+        try {
+            $this->password = $password instanceof EncryptableText
+                ? $password
+                : EncryptableText::from($password);
+
+        } catch (EmptyValueObjectException $e) {
+            throw EmptyValueObjectException::withMessages(['Password cannot be empty.']);
         }
 
-        $this->username = $username;
-        $this->password = $password instanceof EncryptableText
-            ? $password
-            : EncryptableText::make($password);
-
-        $this->validate();
-    }
-
-    public function value(): string
-    {
-        return Str::of($this->username())
-            ->append(':')
-            ->append($this->password());
-    }
-
-    public function username(): string
-    {
-        return $this->username;
-    }
-
-    public function password(): string
-    {
-        return $this->password->decrypt();
+        parent::__construct(
+            Str::of($this->username)
+                ->append(':')
+                ->append($this->password->value)
+                ->value()
+        );
     }
 
     protected function validate(): void
     {
         if ($this->username === '') {
-            throw new InvalidArgumentException('Username cannot be empty.');
-        }
-
-        if ($this->password->value() === '') {
-            throw new InvalidArgumentException('Password cannot be empty.');
+            throw EmptyValueObjectException::withMessages(['Username cannot be empty.']);
         }
     }
 
@@ -60,15 +42,7 @@ class BasicAuthentication extends ValueObject implements Authentication
     {
         return [
             'username' => $this->username,
-            'password' => $this->password->value(),
-        ];
-    }
-
-    public function toDecryptedArray(): array
-    {
-        return [
-            'username' => $this->username,
-            'password' => $this->password->decrypt(),
+            'password' => $this->password->value,
         ];
     }
 }

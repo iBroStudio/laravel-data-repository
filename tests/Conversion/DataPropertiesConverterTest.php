@@ -84,7 +84,7 @@ it('can process through converter', function ($converterClass) {
     $fixtures = [
         'ObjectValueConverter' => [
             'expected_properties_count' => $manager->properties->count() - 16,
-            'properties' => ['text', 'boolean', 'number', 'classString', 'email', 'encryptableText', 'fullName', 'hashedPassword', 'name', 'phone', 'taxNumber', 'timecode', 'uri', 'url', 'uuid'],
+            'properties' => ['text', 'boolean', 'integer', 'float', 'classString', 'email', 'encryptableText', 'fullName', 'hashedPassword', 'name', 'phone', 'vatNumber', 'timecode', 'url', 'uuid'],
         ],
         'LaravelDataConverter' => [
             'expected_properties_count' => $manager->properties->count() - 4,

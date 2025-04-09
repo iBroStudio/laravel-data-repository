@@ -5,12 +5,11 @@ namespace IBroStudio\DataRepository\ValueObjects;
 use IBroStudio\DataRepository\Rules\Encrypted;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
-use InvalidArgumentException;
-use MichaelRubel\ValueObjects\Collection\Primitive\Text;
+use Illuminate\Validation\ValidationException;
 
-final class EncryptableText extends Text
+final class EncryptableText extends ValueObject
 {
-    public static function make(mixed ...$values): static
+    public static function from(mixed ...$values): static
     {
         $value = current($values);
 
@@ -28,12 +27,10 @@ final class EncryptableText extends Text
 
     protected function validate(): void
     {
-        if ($this->value() === '') {
-            throw new InvalidArgumentException('Value cannot be empty.');
-        }
+        parent::validate();
 
-        if (! self::isEncrypted($this->value())) {
-            throw new InvalidArgumentException('Value must be encrypted.');
+        if (! self::isEncrypted($this->value)) {
+            throw ValidationException::withMessages(['Value must be encrypted.']);
         }
     }
 

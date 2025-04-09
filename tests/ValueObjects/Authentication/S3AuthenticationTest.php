@@ -1,10 +1,11 @@
 <?php
 
+use IBroStudio\DataRepository\Exceptions\EmptyValueObjectException;
 use IBroStudio\DataRepository\ValueObjects\Authentication\S3Authentication;
 use IBroStudio\DataRepository\ValueObjects\EncryptableText;
 
-it('can instantiate', function (string $key, EncryptableText|string $secret) {
-    $s3Authentication = S3Authentication::make(
+it('can instantiate S3Authentication object value', function (string $key, EncryptableText|string $secret) {
+    $s3Authentication = S3Authentication::from(
         key: $key,
         secret: $secret,
     );
@@ -13,22 +14,51 @@ it('can instantiate', function (string $key, EncryptableText|string $secret) {
 })->with([
     'encrypted' => fn () => [
         fake()->uuid(),
-        EncryptableText::make(fake()->password()),
+        EncryptableText::from(fake()->password()),
     ],
     'strings' => fn () => [
         fake()->uuid(),
-        EncryptableText::make(fake()->password())->value(),
+        fake()->password(),
     ],
 ]);
 
-it('can provide properties', function () {
+it('can validate S3Authentication object value username', function () {
+    S3Authentication::from(
+        key: '',
+        secret: fake()->password(),
+    );
+})->throws(EmptyValueObjectException::class, 'Key cannot be empty.');
+
+it('can validate S3Authentication object value password', function () {
+    S3Authentication::from(
+        key: fake()->uuid(),
+        secret: '',
+    );
+})->throws(EmptyValueObjectException::class, 'Secret cannot be empty.');
+
+it('can return S3Authentication object value single property', function () {
     $key = fake()->uuid();
     $secret = fake()->password();
-    $s3Authentication = S3Authentication::make(
+    $S3Authentication = S3Authentication::from(
         key: $key,
-        secret: EncryptableText::make($secret),
+        secret: EncryptableText::from($secret),
     );
 
-    expect($s3Authentication->key())->toBe($key);
-    expect($s3Authentication->secret())->toBe($secret);
+    expect($S3Authentication->key)->toBe($key)
+        ->and($S3Authentication->secret->decrypt())->toBe($secret);
+});
+
+it('can return S3Authentication object value properties', function () {
+    $S3Authentication = S3Authentication::from(
+        key: fake()->uuid(),
+        secret: EncryptableText::from(fake()->password()),
+    );
+
+    expect(
+        $S3Authentication->properties()
+    )->toMatchArray([
+        'value' => $S3Authentication->value,
+        'key' => $S3Authentication->key,
+        'secret' => $S3Authentication->secret,
+    ]);
 });

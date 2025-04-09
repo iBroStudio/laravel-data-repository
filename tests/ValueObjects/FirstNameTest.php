@@ -3,21 +3,27 @@
 use IBroStudio\DataRepository\ValueObjects\FirstName;
 use Illuminate\Support\Str;
 
-it('can instantiate', function () {
-    expect(FirstName::make(fake()->firstName))
+it('can instantiate FirstName object value', function () {
+    expect(FirstName::from(fake()->firstName))
         ->toBeInstanceOf(FirstName::class);
 });
 
-it('formats name', function () {
+it('can format FirstName object value', function () {
     $name = fake()->firstName;
 
     expect(
-        FirstName::make($name)->value()
+        FirstName::from($name)->value
     )->toEqual(Str::ucfirst($name));
 });
 
-it('formats bad typed name', function () {
+it('can format composed FirstName object value', function () {
     expect(
-        FirstName::make('yANN')->value()
+        FirstName::from('jean-paul')->value
+    )->toEqual('Jean-Paul');
+});
+
+it('formats bad typed FirstName object value', function () {
+    expect(
+        FirstName::from('yANN')->value
     )->toEqual(Str::ucfirst('Yann'));
 });

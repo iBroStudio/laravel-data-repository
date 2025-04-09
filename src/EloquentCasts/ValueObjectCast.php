@@ -1,10 +1,10 @@
 <?php
 
-namespace IBroStudio\DataRepository\Casts;
+namespace IBroStudio\DataRepository\EloquentCasts;
 
+use IBroStudio\DataRepository\ValueObjects\ValueObject;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
-use MichaelRubel\ValueObjects\ValueObject;
 
 class ValueObjectCast implements CastsAttributes
 {
@@ -19,7 +19,7 @@ class ValueObjectCast implements CastsAttributes
             return null;
         }
 
-        return $this->valueObjectClass::make($value, $this->params);
+        return $this->valueObjectClass::from($value, $this->params);
     }
 
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
@@ -30,7 +30,7 @@ class ValueObjectCast implements CastsAttributes
 
         if ($value instanceof ValueObject) {
 
-            return $value->value();
+            return $value->value;
         }
 
         return $value;

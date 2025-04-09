@@ -2,13 +2,13 @@
 
 use IBroStudio\DataRepository\ValueObjects\Name;
 
-it('can instantiate', function () {
-    expect(Name::make('yann'))
+it('can instantiate Name object value', function () {
+    expect(Name::from('yann'))
         ->toBeInstanceOf(Name::class);
 });
 
-it('formats name', function () {
+it('can format Name object value', function () {
     expect(
-        Name::make('yanN')->value()
+        Name::from('yanN')->value
     )->toEqual('Yann');
 });
