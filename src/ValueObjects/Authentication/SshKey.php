@@ -19,7 +19,7 @@ class SshKey extends ValueObject implements Authentication
     public function __construct(
         public readonly string $user,
         EncryptableText|string $key,
-        EncryptableText|string|null $passphrase)
+        EncryptableText|string|null $passphrase = null)
     {
         try {
             $this->key = $key instanceof EncryptableText

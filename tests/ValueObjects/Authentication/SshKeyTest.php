@@ -33,6 +33,14 @@ it('can instantiate SshKey object value', function (
     ],
 ]);
 
+it('debug', function () {
+    dd(
+        SshKey::from(
+            user: fake()->userName(),
+            key: fake()->sshKey(),
+        )
+    );
+});
 it('can validate SshKey object value key', function () {
     SshKey::from(
         user: fake()->userName(),
