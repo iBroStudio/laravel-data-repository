@@ -10,7 +10,7 @@ it('can instantiate SshKey object value', function (
     EncryptableText|string|null $passphrase) {
     $ssh_key = SshKey::from(
         user: $user,
-        key: $key,
+        public: $key,
         passphrase: $passphrase,
     );
 
@@ -33,18 +33,10 @@ it('can instantiate SshKey object value', function (
     ],
 ]);
 
-it('debug', function () {
-    dd(
-        SshKey::from(
-            user: fake()->userName(),
-            key: fake()->sshKey(),
-        )
-    );
-});
 it('can validate SshKey object value key', function () {
     SshKey::from(
         user: fake()->userName(),
-        key: '',
+        public: '',
         passphrase: EncryptableText::from(fake()->password()),
     );
 })->throws(EmptyValueObjectException::class, 'Private key cannot be empty.');
@@ -55,12 +47,12 @@ it('can return SshKey object value single property', function () {
     $passphrase = fake()->password();
     $ssh_key = SshKey::from(
         user: $user,
-        key: $key,
+        public: $key,
         passphrase: $passphrase,
     );
 
     expect($ssh_key->user)->toBe($user)
-        ->and($ssh_key->key->decrypt())->toBe($key)
+        ->and($ssh_key->public->decrypt())->toBe($key)
         ->and($ssh_key->passphrase->decrypt())->toBe($passphrase);
 });
 
@@ -70,7 +62,7 @@ it('can return SshKey object value properties', function () {
     $passphrase = fake()->password();
     $ssh_key = SshKey::from(
         user: $user,
-        key: $key,
+        public: $key,
         passphrase: $passphrase,
     );
 
@@ -79,7 +71,7 @@ it('can return SshKey object value properties', function () {
     )->toMatchArray([
         'value' => $user,
         'user' => $user,
-        'key' => $ssh_key->key,
+        'public' => $ssh_key->public,
         'passphrase' => $ssh_key->passphrase,
     ]);
 });

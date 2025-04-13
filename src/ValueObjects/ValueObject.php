@@ -6,6 +6,9 @@ use IBroStudio\DataRepository\Exceptions\EmptyValueObjectException;
 use Illuminate\Contracts\Support\Arrayable;
 use Throwable;
 
+/**
+ * @implements Arrayable<string, string>
+ */
 abstract class ValueObject implements Arrayable
 {
     public readonly mixed $value;
@@ -47,6 +50,7 @@ abstract class ValueObject implements Arrayable
         return json_encode($this->toArray());
     }
 
+    /** @return array<string, mixed> */
     public function properties(): array
     {
         return get_object_vars($this);

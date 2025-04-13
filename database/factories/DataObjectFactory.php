@@ -27,7 +27,7 @@ class DataObjectFactory extends Factory
                 password: EncryptableText::from(fake()->password()),
                 authentication: SshKey::from(
                     user: fake()->userName(),
-                    key: EncryptableText::from(fake()->sshKey()),
+                    public: EncryptableText::from(fake()->sshKey()),
                     passphrase: EncryptableText::from(fake()->password()),
                 )
             ),

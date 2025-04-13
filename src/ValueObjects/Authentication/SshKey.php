@@ -12,19 +12,19 @@ use Illuminate\Validation\ValidationException;
 
 class SshKey extends ValueObject implements Authentication
 {
-    public readonly EncryptableText $key;
+    public readonly EncryptableText $public;
 
     public readonly ?EncryptableText $passphrase;
 
     public function __construct(
-        public readonly string $user,
-        EncryptableText|string $key,
+        public readonly string      $user,
+        EncryptableText|string      $public,
         EncryptableText|string|null $passphrase = null)
     {
         try {
-            $this->key = $key instanceof EncryptableText
-                ? $key
-                : EncryptableText::from($key);
+            $this->public = $public instanceof EncryptableText
+                ? $public
+                : EncryptableText::from($public);
 
         } catch (EmptyValueObjectException $e) {
             throw EmptyValueObjectException::withMessages(['Private key cannot be empty.']);
@@ -46,7 +46,7 @@ class SshKey extends ValueObject implements Authentication
         parent::validate();
 
         $validator = Validator::make(
-            ['ssh_key' => $this->key->decrypt()],
+            ['ssh_key' => $this->public->decrypt()],
             ['ssh_key' => new IsSshKeyValidRule],
         );
 
@@ -59,7 +59,7 @@ class SshKey extends ValueObject implements Authentication
     {
         return [
             'user' => $this->user,
-            'key' => $this->key->value,
+            'public' => $this->public->value,
             'passphrase' => $this->passphrase?->value,
         ];
     }

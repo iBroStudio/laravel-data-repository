@@ -6,8 +6,12 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * @property-read array<mixed> $content
+ */
 class VersionedComposerJson extends ValueObject
 {
+    /** @var array<mixed> */
     private array $content;
 
     public function __construct(string $value)
@@ -37,6 +41,7 @@ class VersionedComposerJson extends ValueObject
         return SemanticVersion::from($this->content['version']);
     }
 
+    /** @return array<string, string> */
     public function scripts(): ?array
     {
         return Arr::exists($this->content, 'scripts') ? $this->content['scripts'] : null;

@@ -53,6 +53,7 @@ it('can compare ByteUnit values', function () {
     $value = ByteUnit::from('1.42MB');
     $value2 = ByteUnit::from('2GB');
     $value3 = ByteUnit::from('100B');
+
     expect($value->isEqualTo($value))->toBeTrue()
         ->and($value->isLessThanOrEqualTo($value))->toBeTrue()
         ->and($value->isLessThan($value))->toBeFalse()
