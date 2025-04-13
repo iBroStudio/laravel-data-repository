@@ -7,10 +7,13 @@ use IBroStudio\DataRepository\Contracts\UnitValueContract;
 use IBroStudio\DataRepository\Enums\ByteUnitEnum;
 use IBroStudio\DataRepository\Formatters\ByteFormatter;
 use IBroStudio\DataRepository\ValueObjects\ValueObject;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class ByteUnit extends ValueObject implements UnitValueContract
 {
+    public readonly int $bytes;
+
     protected ByteUnits\System $system;
 
     public function __construct(mixed $value)
@@ -25,8 +28,12 @@ class ByteUnit extends ValueObject implements UnitValueContract
             }
         }
 
+        $this->bytes = (int) $this->system->numberOfBytes();
+
         parent::__construct(
-            (int) $this->system->numberOfBytes()
+            (float) Str::of(ByteFormatter::format($this->system->format()))
+                ->before(self::unit())
+                ->value()
         );
     }
 
@@ -45,38 +52,28 @@ class ByteUnit extends ValueObject implements UnitValueContract
         return $this->withUnit($unit);
     }
 
-    public function isEqualTo(string|ByteUnit $compare): bool
+    public function isEqualTo(ByteUnit $compare): bool
     {
-        return $this->system->isEqualTo(
-            $compare instanceof ByteUnit ? $compare->value : ByteUnits\parse($compare)
-        );
+        return $this->bytes === $compare->bytes;
     }
 
-    public function isLessThanOrEqualTo(string|ByteUnit $compare): bool
+    public function isLessThanOrEqualTo(ByteUnit $compare): bool
     {
-        return $this->system->isLessThanOrEqualTo(
-            $compare instanceof ByteUnit ? $compare->value : ByteUnits\parse($compare)
-        );
+        return $this->bytes <= $compare->bytes;
     }
 
-    public function isLessThan(string|ByteUnit $compare): bool
+    public function isLessThan(ByteUnit $compare): bool
     {
-        return $this->system->isLessThan(
-            $compare instanceof ByteUnit ? $compare->value : ByteUnits\parse($compare)
-        );
+        return $this->bytes < $compare->bytes;
     }
 
-    public function isGreaterThanOrEqualTo(string|ByteUnit $compare): bool
+    public function isGreaterThanOrEqualTo(ByteUnit $compare): bool
     {
-        return $this->system->isGreaterThanOrEqualTo(
-            $compare instanceof ByteUnit ? $compare->value : ByteUnits\parse($compare)
-        );
+        return $this->bytes >= $compare->bytes;
     }
 
-    public function isGreaterThan(string|ByteUnit $compare): bool
+    public function isGreaterThan(ByteUnit $compare): bool
     {
-        return $this->system->isGreaterThan(
-            $compare instanceof ByteUnit ? $compare->value : ByteUnits\parse($compare)
-        );
+        return $this->bytes > $compare->bytes;
     }
 }

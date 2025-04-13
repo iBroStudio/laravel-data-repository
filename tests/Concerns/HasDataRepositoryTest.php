@@ -16,9 +16,9 @@ it('can save data object', function () {
     $data = new ReferableData(
         name: fake()->name(),
         password: ValueObjects\EncryptableText::from(fake()->password()),
-        authentication: ValueObjects\Authentication\SshAuthentication::from(
-            username: fake()->userName(),
-            privateKey: ValueObjects\EncryptableText::from(fake()->macAddress()),
+        authentication: ValueObjects\Authentication\SshKey::from(
+            user: fake()->userName(),
+            key: ValueObjects\EncryptableText::from(fake()->sshKey()),
             passphrase: ValueObjects\EncryptableText::from(fake()->password()),
         )
     );
@@ -36,9 +36,9 @@ it('cascade delete data object', function () {
     $data = new ReferableData(
         name: fake()->name(),
         password: ValueObjects\EncryptableText::from(fake()->password()),
-        authentication: ValueObjects\Authentication\SshAuthentication::from(
-            username: fake()->userName(),
-            privateKey: ValueObjects\EncryptableText::from(fake()->macAddress()),
+        authentication: ValueObjects\Authentication\SshKey::from(
+            user: fake()->userName(),
+            key: ValueObjects\EncryptableText::from(fake()->sshKey()),
             passphrase: ValueObjects\EncryptableText::from(fake()->password()),
         )
     );
@@ -89,18 +89,9 @@ it('can save complex value object', function ($data) {
         username: fake()->userName(),
         password: ValueObjects\EncryptableText::from(fake()->password()),
     ),
-    'ssh-auth' => fn () => ValueObjects\Authentication\SshAuthentication::from(
-        username: fake()->userName(),
-        privateKey: ValueObjects\EncryptableText::from(fake()->macAddress()),
-        passphrase: ValueObjects\EncryptableText::from(fake()->password()),
-    ),
-    'authentication-with-basic' => fn () => ValueObjects\Authentication\BasicAuthentication::from(
-        username: fake()->userName(),
-        password: ValueObjects\EncryptableText::from(fake()->password()),
-    ),
-    'authentication-with-ssh' => fn () => ValueObjects\Authentication\SshAuthentication::from(
-        username: fake()->userName(),
-        privateKey: ValueObjects\EncryptableText::from(fake()->macAddress()),
+    'ssh-key' => fn () => ValueObjects\Authentication\SshKey::from(
+        user: fake()->userName(),
+        key: ValueObjects\EncryptableText::from(fake()->sshKey()),
         passphrase: ValueObjects\EncryptableText::from(fake()->password()),
     ),
 ]);
@@ -110,18 +101,18 @@ it('can save only one value per referable type without constraint', function () 
     $data = new ReferableData(
         name: fake()->name(),
         password: ValueObjects\EncryptableText::from(fake()->password()),
-        authentication: ValueObjects\Authentication\SshAuthentication::from(
-            username: fake()->userName(),
-            privateKey: ValueObjects\EncryptableText::from(fake()->macAddress()),
+        authentication: ValueObjects\Authentication\SshKey::from(
+            user: fake()->userName(),
+            key: ValueObjects\EncryptableText::from(fake()->sshKey()),
             passphrase: ValueObjects\EncryptableText::from(fake()->password()),
         )
     );
     $data2 = new ReferableData(
         name: fake()->name(),
         password: ValueObjects\EncryptableText::from(fake()->password()),
-        authentication: ValueObjects\Authentication\SshAuthentication::from(
-            username: fake()->userName(),
-            privateKey: ValueObjects\EncryptableText::from(fake()->macAddress()),
+        authentication: ValueObjects\Authentication\SshKey::from(
+            user: fake()->userName(),
+            key: ValueObjects\EncryptableText::from(fake()->sshKey()),
             passphrase: ValueObjects\EncryptableText::from(fake()->password()),
         )
     );
@@ -146,9 +137,9 @@ it('can query data with values constraints', function () {
     $data = new ReferableData(
         name: fake()->name(),
         password: ValueObjects\EncryptableText::from(fake()->password()),
-        authentication: ValueObjects\Authentication\SshAuthentication::from(
-            username: fake()->userName(),
-            privateKey: ValueObjects\EncryptableText::from(fake()->macAddress()),
+        authentication: ValueObjects\Authentication\SshKey::from(
+            user: fake()->userName(),
+            key: ValueObjects\EncryptableText::from(fake()->sshKey()),
             passphrase: ValueObjects\EncryptableText::from(fake()->password()),
         )
     );
@@ -166,18 +157,18 @@ it('can save data with values constraints', function () {
     $data = new ReferableData(
         name: fake()->name(),
         password: ValueObjects\EncryptableText::from(fake()->password()),
-        authentication: ValueObjects\Authentication\SshAuthentication::from(
-            username: fake()->userName(),
-            privateKey: ValueObjects\EncryptableText::from(fake()->macAddress()),
+        authentication: ValueObjects\Authentication\SshKey::from(
+            user: fake()->userName(),
+            key: ValueObjects\EncryptableText::from(fake()->sshKey()),
             passphrase: ValueObjects\EncryptableText::from(fake()->password()),
         )
     );
     $data2 = new ReferableData(
         name: fake()->name(),
         password: ValueObjects\EncryptableText::from(fake()->password()),
-        authentication: ValueObjects\Authentication\SshAuthentication::from(
-            username: fake()->userName(),
-            privateKey: ValueObjects\EncryptableText::from(fake()->macAddress()),
+        authentication: ValueObjects\Authentication\SshKey::from(
+            user: fake()->userName(),
+            key: ValueObjects\EncryptableText::from(fake()->sshKey()),
             passphrase: ValueObjects\EncryptableText::from(fake()->password()),
         )
     );
@@ -212,9 +203,9 @@ it('allows model to have dto attribute', function () {
     $data = new ReferableData(
         name: fake()->name(),
         password: ValueObjects\EncryptableText::from(fake()->password()),
-        authentication: ValueObjects\Authentication\SshAuthentication::from(
-            username: fake()->userName(),
-            privateKey: ValueObjects\EncryptableText::from(fake()->macAddress()),
+        authentication: ValueObjects\Authentication\SshKey::from(
+            user: fake()->userName(),
+            key: ValueObjects\EncryptableText::from(fake()->sshKey()),
             passphrase: ValueObjects\EncryptableText::from(fake()->password()),
         )
     );
@@ -233,9 +224,9 @@ it('allows model to have dto attribute', function () {
     $data = new ReferableData(
         name: fake()->name(),
         password: ValueObjects\EncryptableText::from(fake()->password()),
-        authentication: ValueObjects\Authentication\SshAuthentication::from(
-            username: fake()->userName(),
-            privateKey: ValueObjects\EncryptableText::from(fake()->macAddress()),
+        authentication: ValueObjects\Authentication\SshKey::from(
+            user: fake()->userName(),
+            key: ValueObjects\EncryptableText::from(fake()->sshKey()),
             passphrase: ValueObjects\EncryptableText::from(fake()->password()),
         )
     );
@@ -275,9 +266,9 @@ it('throws exception with constrained dto attribute', function () {
         'dto_attribute' => new ReferableData(
             name: fake()->name(),
             password: ValueObjects\EncryptableText::from(fake()->password()),
-            authentication: ValueObjects\Authentication\SshAuthentication::from(
-                username: fake()->userName(),
-                privateKey: ValueObjects\EncryptableText::from(fake()->macAddress()),
+            authentication: ValueObjects\Authentication\SshKey::from(
+                user: fake()->userName(),
+                key: ValueObjects\EncryptableText::from(fake()->sshKey()),
                 passphrase: ValueObjects\EncryptableText::from(fake()->password()),
             )
         ),
@@ -296,9 +287,9 @@ it('can delete dto attribute', function () {
     $data = new ReferableData(
         name: fake()->name(),
         password: ValueObjects\EncryptableText::from(fake()->password()),
-        authentication: ValueObjects\Authentication\SshAuthentication::from(
-            username: fake()->userName(),
-            privateKey: ValueObjects\EncryptableText::from(fake()->macAddress()),
+        authentication: ValueObjects\Authentication\SshKey::from(
+            user: fake()->userName(),
+            key: ValueObjects\EncryptableText::from(fake()->sshKey()),
             passphrase: ValueObjects\EncryptableText::from(fake()->password()),
         )
     );

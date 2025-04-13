@@ -30,7 +30,7 @@ it('can validate ByteUnit', function () {
 it('can return ByteUnit value', function () {
     expect(
         ByteUnit::from('1.42MB')->value
-    )->toEqual(1420000);
+    )->toEqual(1.42);
 });
 
 it('can return ByteUnit with unit', function () {
@@ -51,22 +51,18 @@ it('can convert ByteUnit', function () {
 
 it('can compare ByteUnit values', function () {
     $value = ByteUnit::from('1.42MB');
-    $value2 = ByteUnit::from('2MB');
-    expect($value->isEqualTo('2GB'))->toBeFalse()
-        ->and($value->isLessThanOrEqualTo('2GB'))->toBeTrue()
-        ->and($value->isLessThan('2GB'))->toBeTrue()
-        ->and($value->isGreaterThanOrEqualTo('2GB'))->toBeFalse()
-        ->and($value->isGreaterThan('2GB'))->toBeFalse()
-        ->and($value->isEqualTo('1.42MB'))->toBeTrue()
-        ->and($value->isLessThanOrEqualTo('1.42MB'))->toBeTrue()
-        ->and($value->isLessThan('1.42MB'))->toBeFalse()
-        ->and($value->isGreaterThanOrEqualTo('1.42MB'))->toBeTrue()
-        ->and($value->isGreaterThan('1.42MB'))->toBeFalse()
-        ->and($value->isEqualTo('100B'))->toBeFalse()
-        ->and($value->isLessThanOrEqualTo('100B'))->toBeFalse()
-        ->and($value->isLessThan('100B'))->toBeFalse()
-        ->and($value->isGreaterThanOrEqualTo('100B'))->toBeTrue()
-        ->and($value->isGreaterThan('100B'))->toBeTrue()
+    $value2 = ByteUnit::from('2GB');
+    $value3 = ByteUnit::from('100B');
+    expect($value->isEqualTo($value))->toBeTrue()
+        ->and($value->isLessThanOrEqualTo($value))->toBeTrue()
+        ->and($value->isLessThan($value))->toBeFalse()
+        ->and($value->isGreaterThanOrEqualTo($value))->toBeTrue()
+        ->and($value->isGreaterThan($value))->toBeFalse()
+        ->and($value->isEqualTo($value3))->toBeFalse()
+        ->and($value->isLessThanOrEqualTo($value3))->toBeFalse()
+        ->and($value->isLessThan($value3))->toBeFalse()
+        ->and($value->isGreaterThanOrEqualTo($value3))->toBeTrue()
+        ->and($value->isGreaterThan($value3))->toBeTrue()
         ->and($value->isEqualTo($value2))->toBeFalse()
         ->and($value->isLessThanOrEqualTo($value2))->toBeTrue()
         ->and($value->isLessThan($value2))->toBeTrue()

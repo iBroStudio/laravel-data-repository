@@ -1,6 +1,7 @@
 <?php
 
 use IBroStudio\DataRepository\Tests\Support\Models\Referable;
+use IBroStudio\DataRepository\ValueObjects\Domain;
 use IBroStudio\DataRepository\ValueObjects\TimeDuration;
 use IBroStudio\DataRepository\ValueObjects\Url;
 
@@ -20,4 +21,13 @@ it('can cast model property with TimeDuration value object', function () {
 
     expect($referable->time_duration)
         ->toBeInstanceOf(TimeDuration::class);
+});
+
+it('can cast model property with Domain value object', function () {
+    $referable = Referable::factory()->create([
+        'domain' => fake()->domainName(),
+    ]);
+
+    expect($referable->domain)
+        ->toBeInstanceOf(Domain::class);
 });

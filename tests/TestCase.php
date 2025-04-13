@@ -4,6 +4,7 @@ namespace IBroStudio\DataRepository\Tests;
 
 use Bakame\Laravel\Pdp;
 use IBroStudio\DataRepository\DataRepositoryServiceProvider;
+use IBroStudio\DataRepository\Tests\Support\TestServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Mpociot\VatCalculator\VatCalculatorServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -28,6 +29,7 @@ class TestCase extends Orchestra
             LaravelDataServiceProvider::class,
             Pdp\ServiceProvider::class,
             VatCalculatorServiceProvider::class,
+            TestServiceProvider::class,
         ];
     }
 

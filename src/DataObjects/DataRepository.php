@@ -3,7 +3,6 @@
 namespace IBroStudio\DataRepository\DataObjects;
 
 use IBroStudio\DataRepository\Concerns\ConvertiblesDataProperties;
-use IBroStudio\DataRepository\Contracts\Authentication;
 use IBroStudio\DataRepository\ValueObjects\ValueObject;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;

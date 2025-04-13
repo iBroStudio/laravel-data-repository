@@ -5,7 +5,7 @@ namespace IBroStudio\DataRepository\Database\Factories;
 use IBroStudio\DataRepository\Models\DataObject;
 use IBroStudio\DataRepository\Tests\Support\DataObjects\ReferableData;
 use IBroStudio\DataRepository\Tests\Support\Models\Referable;
-use IBroStudio\DataRepository\ValueObjects\Authentication\SshAuthentication;
+use IBroStudio\DataRepository\ValueObjects\Authentication\SshKey;
 use IBroStudio\DataRepository\ValueObjects\EncryptableText;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -25,9 +25,9 @@ class DataObjectFactory extends Factory
             'values' => new ReferableData(
                 name: fake()->name(),
                 password: EncryptableText::from(fake()->password()),
-                authentication: SshAuthentication::from(
-                    username: fake()->userName(),
-                    privateKey: EncryptableText::from(fake()->macAddress()),
+                authentication: SshKey::from(
+                    user: fake()->userName(),
+                    key: EncryptableText::from(fake()->sshKey()),
                     passphrase: EncryptableText::from(fake()->password()),
                 )
             ),
