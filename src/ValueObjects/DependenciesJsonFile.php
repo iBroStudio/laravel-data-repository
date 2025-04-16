@@ -9,7 +9,7 @@ use Illuminate\Validation\ValidationException;
 /**
  * @property-read array<mixed> $content
  */
-class VersionedComposerJson extends ValueObject
+class DependenciesJsonFile extends ValueObject
 {
     /** @var array<mixed> */
     private array $content;
@@ -41,15 +41,9 @@ class VersionedComposerJson extends ValueObject
         return SemanticVersion::from($this->content['version']);
     }
 
-    /** @return array<string, string> */
-    public function scripts(): ?array
+    public function data(?string $key = null): string|array|null
     {
-        return Arr::exists($this->content, 'scripts') ? $this->content['scripts'] : null;
-    }
-
-    public function script(string $key): ?string
-    {
-        return $this->scripts()[$key] ?? null;
+        return is_null($key) ? $this->content : Arr::get($this->content, $key);
     }
 
     protected function validate(): void

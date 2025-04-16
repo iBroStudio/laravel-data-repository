@@ -24,8 +24,3 @@ it('can return Text object value as array', function () {
         0 => 'test',
     ]);
 });
-
-    expect(
-        Text::from('test')->toJson()
-    )->toBe('["test"]');
-});

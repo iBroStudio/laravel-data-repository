@@ -17,5 +17,11 @@
         "format": "vendor/bin/pint",
         "full-check": "composer format && composer test && composer analyse"
     },
-    "version": "3.88.84"
+    "autoload": {
+        "psr-4": {
+            "IBroStudio\\DataRepository\\": "src/",
+            "IBroStudio\\DataRepository\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "version": "1.58.82"
 }

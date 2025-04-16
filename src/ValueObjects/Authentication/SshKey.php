@@ -17,8 +17,8 @@ class SshKey extends ValueObject implements Authentication
     public readonly ?EncryptableText $passphrase;
 
     public function __construct(
-        public readonly string      $user,
-        EncryptableText|string      $public,
+        public readonly string $user,
+        EncryptableText|string $public,
         EncryptableText|string|null $passphrase = null)
     {
         try {
