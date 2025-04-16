@@ -69,3 +69,9 @@ it('can increment SemanticVersion with prefix', function () {
             ->value
     )->toEqual('v.2.0.0');
 });
+
+it('can return SemanticVersion in underscored format', function () {
+    expect(
+        SemanticVersion::from('v.1.0.0')->underscored()
+    )->toEqual('v_1_0_0');
+});

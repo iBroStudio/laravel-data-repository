@@ -43,6 +43,11 @@ class SemanticVersion extends ValueObject
         return Str::after($this->value, $this->prefix);
     }
 
+    public function underscored(): string
+    {
+        return Str::replace('.', '_', $this->value);
+    }
+
     public function increment(SemanticVersionSegments $segment): static
     {
         $incremented = clone $this;
