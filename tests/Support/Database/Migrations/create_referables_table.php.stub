@@ -14,6 +14,8 @@ return new class extends Migration
             $table->string('object_value_property')->nullable();
             $table->string('time_duration')->nullable();
             $table->string('domain')->nullable();
+            $table->string('class')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

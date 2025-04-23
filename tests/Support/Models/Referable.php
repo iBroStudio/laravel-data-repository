@@ -3,6 +3,7 @@
 namespace IBroStudio\DataRepository\Tests\Support\Models;
 
 use IBroStudio\DataRepository\Concerns\HasDataRepository;
+use IBroStudio\DataRepository\Concerns\HasOwnClassAsProperty;
 use IBroStudio\DataRepository\EloquentCasts\DataObjectCast;
 use IBroStudio\DataRepository\EloquentCasts\ValueObjectCast;
 use IBroStudio\DataRepository\Tests\Support\Database\Factories\ReferableFactory;
@@ -16,6 +17,7 @@ class Referable extends Model
 {
     use HasDataRepository;
     use HasFactory;
+    use HasOwnClassAsProperty;
 
     protected $fillable = ['dto_attribute'];
 
